@@ -133,4 +133,9 @@ class DebtSimplifierTest {
         List<Transfer> transfers = simplifier.simplify(balances("a", 100, "b", 300, "c", -400));
         assertEquals(Money.ofRupees(400), DebtSimplifier.totalMoved(transfers));
     }
+
+    @Test
+    void transferToString() {
+        assertEquals("sam pays riya Rs 12.50", new Transfer("sam", "riya", Money.parse("12.5")).toString());
+    }
 }
