@@ -182,4 +182,12 @@ class LedgerTest {
         assertTrue(ledger.isSettled());
         assertThrows(NotFoundException.class, () -> ledger.removeExpense(expense.id()));
     }
+
+    @Test
+    void restoreKeepsIdsAndContinuesNumbering() {
+        Expense saved = new Expense(7, "Old trip", "riya", Money.ofRupees(10), Category.TRAVEL, SplitType.EQUAL,
+                Map.of("riya", Money.ofRupees(10)), NOV_1);
+        ledger.restoreExpense(saved);
+        assertEquals(8, dinner("aman", "30").id());
+    }
 }
