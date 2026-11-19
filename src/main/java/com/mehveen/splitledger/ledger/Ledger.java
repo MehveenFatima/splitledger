@@ -111,4 +111,14 @@ public class Ledger {
     public List<Expense> expenses() {
         return Collections.unmodifiableList(expenses);
     }
+
+    public Payment recordPayment(String fromId, String toId, Money amount, LocalDate date) {
+        Payment payment = new Payment(member(fromId).id(), member(toId).id(), amount, date);
+        payments.add(payment);
+        return payment;
+    }
+
+    public List<Payment> payments() {
+        return Collections.unmodifiableList(payments);
+    }
 }
