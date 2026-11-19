@@ -97,4 +97,12 @@ class LedgerTest {
         Money sum = ledger.balances().values().stream().reduce(Money.ZERO, Money::plus);
         assertEquals(Money.ZERO, sum);
     }
+
+    @Test
+    void paymentsMoveBalances() {
+        dinner("riya", "900");
+        ledger.recordPayment("aman", "riya", Money.ofRupees(300), NOV_19);
+        assertEquals(Money.ZERO, ledger.balanceOf("aman"));
+        assertEquals(Money.ofRupees(300), ledger.balanceOf("riya"));
+    }
 }
