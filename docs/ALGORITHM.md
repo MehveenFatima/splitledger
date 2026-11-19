@@ -35,3 +35,14 @@ while both heaps are not empty:
 
 Ties are broken by member id so the output is deterministic.
 
+## Worked example
+
+Balances after a trip: Aman **+3933.33**, Riya **-2866.67**, Sam **-1066.66**.
+
+| Step | Largest creditor | Largest debtor | Payment | Left over |
+|---|---|---|---|---|
+| 1 | Aman 3933.33 | Riya 2866.67 | Riya pays Aman 2866.67 | Aman +1066.66 |
+| 2 | Aman 1066.66 | Sam 1066.66 | Sam pays Aman 1066.66 | nobody |
+
+Two payments settle three people.
+
