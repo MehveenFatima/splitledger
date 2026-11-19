@@ -85,4 +85,14 @@ public final class Expense {
     public LocalDate date() {
         return date;
     }
+
+    /** Amount this member owes for the expense, or zero if not a participant. */
+    public Money shareOf(String memberId) {
+        return shares.getOrDefault(memberId, Money.ZERO);
+    }
+
+    /** True if the member paid for or shares this expense. */
+    public boolean involves(String memberId) {
+        return payerId.equals(memberId) || shares.containsKey(memberId);
+    }
 }
