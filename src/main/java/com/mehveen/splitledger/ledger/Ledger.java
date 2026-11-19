@@ -179,4 +179,16 @@ public class Ledger {
                 .filter(e -> category == null || e.category() == category)
                 .toList();
     }
+
+    /** Removes a member only if no expense or payment refers to them. */
+    public Member removeMember(String memberId) {
+        Member member = member(memberId);
+        boolean referenced = expenses.stream().anyMatch(e -> e.involves(member.id()))
+                || payments.stream().anyMatch(p -> p.fromId().equals(member.id()) || p.toId().equals(member.id()));
+        if (referenced) {
+            throw new ValidationException("Cannot remove " + member.id() + ": they appear in expenses or payments");
+        }
+        members.remove(member.id());
+        return member;
+    }
 }
