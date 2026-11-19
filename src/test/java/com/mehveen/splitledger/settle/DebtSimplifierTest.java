@@ -58,4 +58,12 @@ class DebtSimplifierTest {
         assertEquals(new Transfer("c", "a", Money.ofRupees(400)), transfers.get(0));
         assertEquals(new Transfer("b", "a", Money.ofRupees(200)), transfers.get(1));
     }
+
+    @Test
+    void oneDebtorManyCreditors() {
+        List<Transfer> transfers = simplifier.simplify(balances("a", 100, "b", 300, "c", -400));
+        assertEquals(List.of(
+                new Transfer("c", "b", Money.ofRupees(300)),
+                new Transfer("c", "a", Money.ofRupees(100))), transfers);
+    }
 }
