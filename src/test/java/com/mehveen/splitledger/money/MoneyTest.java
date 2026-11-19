@@ -77,4 +77,13 @@ class MoneyTest {
         assertEquals(five, five.negate().abs());
         assertSame(five, five.abs());
     }
+
+    @Test
+    void signChecks() {
+        assertTrue(Money.ZERO.isZero());
+        assertTrue(Money.ofPaise(1).isPositive());
+        assertTrue(Money.ofPaise(-1).isNegative());
+        assertFalse(Money.ZERO.isPositive());
+        assertFalse(Money.ZERO.isNegative());
+    }
 }
