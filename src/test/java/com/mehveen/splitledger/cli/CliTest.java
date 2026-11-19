@@ -76,4 +76,11 @@ class CliTest {
         assertEquals(Money.ofRupees(600), cli.ledger().balanceOf("riya"));
         assertEquals(Money.ofRupees(-300), cli.ledger().balanceOf("sam"));
     }
+
+    @Test
+    void expenseDateDefaultsToClock() {
+        addGroup();
+        run("expense add Dinner 900 --payer riya");
+        assertEquals(LocalDate.of(2026, 11, 19), cli.ledger().expenses().get(0).date());
+    }
 }
