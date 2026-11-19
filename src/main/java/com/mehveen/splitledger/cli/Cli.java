@@ -233,4 +233,11 @@ public class Cli {
         }
         found.forEach(out::println);
     }
+
+    private void pay(ParsedCommand command) {
+        Money amount = Money.parse(command.word(3));
+        LocalDate date = command.option("date").map(Cli::parseDate).orElse(LocalDate.now(clock));
+        Payment payment = ledger.recordPayment(command.word(1), command.word(2), amount, date);
+        out.println("Recorded: " + payment);
+    }
 }
