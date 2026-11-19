@@ -190,4 +190,12 @@ class LedgerTest {
         ledger.restoreExpense(saved);
         assertEquals(8, dinner("aman", "30").id());
     }
+
+    @Test
+    void restoreRejectsDuplicateId() {
+        Expense first = dinner("riya", "30");
+        Expense copy = new Expense(first.id(), "Copy", "riya", Money.ofRupees(10), null, null,
+                Map.of("riya", Money.ofRupees(10)), NOV_1);
+        assertThrows(ValidationException.class, () -> ledger.restoreExpense(copy));
+    }
 }
