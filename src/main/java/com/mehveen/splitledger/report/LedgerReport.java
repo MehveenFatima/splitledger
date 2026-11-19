@@ -35,4 +35,13 @@ public class LedgerReport {
         appendSettlement(out, ledger);
         return out.toString();
     }
+
+    private void appendBalances(StringBuilder out, Ledger ledger) {
+        out.append("\nBalances (+ is owed, - owes):\n");
+        Map<String, Money> balances = ledger.balances();
+        for (Member member : ledger.members()) {
+            out.append(String.format("  %-12s spent %12s   balance %12s%n",
+                    member.id(), ledger.spendingOf(member.id()).format(), balances.get(member.id()).format()));
+        }
+    }
 }
