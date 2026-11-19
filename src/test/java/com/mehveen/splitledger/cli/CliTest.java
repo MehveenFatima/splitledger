@@ -63,4 +63,9 @@ class CliTest {
         run("member add \"Riya Sharma\" --id rs");
         assertTrue(cli.ledger().hasMember("rs"));
     }
+
+    @Test
+    void membersWhenEmpty() {
+        assertTrue(run("members").contains("No members yet"));
+    }
 }
