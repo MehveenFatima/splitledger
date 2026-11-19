@@ -44,4 +44,10 @@ class DebtSimplifierTest {
     void settledGroupNeedsNoTransfers() {
         assertTrue(simplifier.simplify(balances("a", 0, "b", 0)).isEmpty());
     }
+
+    @Test
+    void twoPeopleOneTransfer() {
+        List<Transfer> transfers = simplifier.simplify(balances("a", 500, "b", -500));
+        assertEquals(List.of(new Transfer("b", "a", Money.ofRupees(500))), transfers);
+    }
 }
