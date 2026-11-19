@@ -29,4 +29,9 @@ class CsvCodecTest {
     void quotesSurroundingWhitespace() {
         assertEquals("\" padded \"", CsvCodec.escape(" padded "));
     }
+
+    @Test
+    void nullBecomesEmpty() {
+        assertEquals("a,,b", CsvCodec.encode(Arrays.asList("a", null, "b")));
+    }
 }
