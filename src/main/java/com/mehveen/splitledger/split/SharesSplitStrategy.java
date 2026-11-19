@@ -18,4 +18,15 @@ public class SharesSplitStrategy extends AbstractSplitStrategy {
     public SplitType type() {
         return SplitType.SHARES;
     }
+
+    private static List<BigDecimal> validatedShares(List<SplitShare> shares) {
+        List<BigDecimal> weights = new ArrayList<>();
+        for (SplitShare share : shares) {
+            if (share.value().signum() <= 0) {
+                throw new ValidationException("Shares for " + share.memberId() + " must be greater than zero");
+            }
+            weights.add(share.value());
+        }
+        return weights;
+    }
 }
