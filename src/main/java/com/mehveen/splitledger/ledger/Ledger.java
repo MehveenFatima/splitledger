@@ -121,4 +121,27 @@ public class Ledger {
     public List<Payment> payments() {
         return Collections.unmodifiableList(payments);
     }
+
+    /**
+     * Net balance of every member. Payer is credited the full amount, every
+     * participant is debited their share; a payment credits the payer and
+     * debits the receiver.
+     */
+    public Map<String, Money> balances() {
+        Map<String, Money> balances = new LinkedHashMap<>();
+        members.keySet().forEach(id -> balances.put(id, Money.ZERO));
+        for (Expense expense : expenses) {
+            balances.merge(expense.payerId(), expense.amount(), Money::plus);
+            expense.shares().forEach((id, share) -> balances.merge(id, share.negate(), Money::plus));
+        }
+        for (Payment payment : payments) {
+            balances.merge(payment.fromId(), payment.amount(), Money::plus);
+            balances.merge(payment.toId(), payment.amount().negate(), Money::plus);
+        }
+        return Collections.unmodifiableMap(balances);
+    }
+
+    public Money balanceOf(String memberId) {
+        return balances().get(member(memberId).id());
+    }
 }
