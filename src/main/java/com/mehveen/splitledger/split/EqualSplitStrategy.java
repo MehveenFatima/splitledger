@@ -15,4 +15,9 @@ public class EqualSplitStrategy extends AbstractSplitStrategy {
     public SplitType type() {
         return SplitType.EQUAL;
     }
+
+    @Override
+    protected Map<String, Money> compute(Money total, List<SplitShare> shares) {
+        return zip(shares, total.allocate(shares.size()));
+    }
 }
