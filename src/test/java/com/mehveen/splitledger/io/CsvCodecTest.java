@@ -50,4 +50,9 @@ class CsvCodecTest {
     void decodesQuotedFields() {
         assertEquals(List.of("x", "Dinner, \"fancy\""), CsvCodec.decode("x,\"Dinner, \"\"fancy\"\"\""));
     }
+
+    @Test
+    void rejectsUnterminatedQuote() {
+        assertThrows(IllegalArgumentException.class, () -> CsvCodec.decode("a,\"oops"));
+    }
 }
