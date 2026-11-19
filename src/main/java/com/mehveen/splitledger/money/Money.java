@@ -66,4 +66,16 @@ public final class Money implements Comparable<Money> {
     public Money abs() {
         return paise < 0 ? negate() : this;
     }
+
+    public boolean isZero() {
+        return paise == 0;
+    }
+
+    public boolean isPositive() {
+        return paise > 0;
+    }
+
+    public boolean isNegative() {
+        return paise < 0;
+    }
 }
