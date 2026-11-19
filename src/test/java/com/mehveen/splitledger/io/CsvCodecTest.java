@@ -14,4 +14,9 @@ class CsvCodecTest {
     void encodesPlainFields() {
         assertEquals("MEMBER,riya,Riya", CsvCodec.encode(List.of("MEMBER", "riya", "Riya")));
     }
+
+    @Test
+    void quotesFieldsWithCommas() {
+        assertEquals("\"Dinner, drinks\"", CsvCodec.escape("Dinner, drinks"));
+    }
 }
