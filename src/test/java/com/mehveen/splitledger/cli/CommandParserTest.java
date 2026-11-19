@@ -51,4 +51,11 @@ class CommandParserTest {
         assertThrows(ValidationException.class, () -> CommandParser.parse("expense add --payer"));
         assertThrows(ValidationException.class, () -> CommandParser.parse("expense add --payer --with a"));
     }
+
+    @Test
+    void blankInputIsEmpty() {
+        assertTrue(CommandParser.parse("   ").isEmpty());
+        assertTrue(CommandParser.parse(null).isEmpty());
+        assertFalse(CommandParser.parse("help").isEmpty());
+    }
 }
