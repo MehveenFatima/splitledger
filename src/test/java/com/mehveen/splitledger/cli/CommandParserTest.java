@@ -16,4 +16,10 @@ class CommandParserTest {
     void splitsOnWhitespace() {
         assertEquals(List.of("member", "add", "Riya"), CommandParser.tokenize("  member   add\tRiya "));
     }
+
+    @Test
+    void keepsQuotedTextTogether() {
+        assertEquals(List.of("expense", "add", "Dinner at Paradise", "1200"),
+                CommandParser.tokenize("expense add \"Dinner at Paradise\" 1200"));
+    }
 }
