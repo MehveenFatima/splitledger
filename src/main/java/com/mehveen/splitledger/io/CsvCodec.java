@@ -22,4 +22,19 @@ public final class CsvCodec {
         }
         return line.toString();
     }
+
+    static String escape(String field) {
+        if (field == null) {
+            return "";
+        }
+        if (field.indexOf('\n') >= 0 || field.indexOf('\r') >= 0) {
+            throw new IllegalArgumentException("Fields cannot contain line breaks");
+        }
+        if (field.indexOf(',') >= 0 || field.indexOf('"') >= 0
+                || (!field.isEmpty() && (Character.isWhitespace(field.charAt(0))
+                || Character.isWhitespace(field.charAt(field.length() - 1))))) {
+            return '"' + field.replace("\"", "\"\"") + '"';
+        }
+        return field;
+    }
 }
