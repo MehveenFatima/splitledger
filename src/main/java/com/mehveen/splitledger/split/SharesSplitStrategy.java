@@ -29,4 +29,9 @@ public class SharesSplitStrategy extends AbstractSplitStrategy {
         }
         return weights;
     }
+
+    @Override
+    protected Map<String, Money> compute(Money total, List<SplitShare> shares) {
+        return zip(shares, total.allocate(validatedShares(shares)));
+    }
 }
