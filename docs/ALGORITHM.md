@@ -18,3 +18,20 @@ who paid for what does not.
 Because every credit has a matching debit, the balances always add up to exactly zero.
 `DebtSimplifier` checks this and refuses unbalanced input.
 
+## Step 2: greedy matching with two max-heaps
+
+```text
+creditors = max-heap of people who are owed money (by amount)
+debtors   = max-heap of people who owe money (by amount)
+
+while both heaps are not empty:
+    c = creditors.poll()          # owed the most
+    d = debtors.poll()            # owes the most
+    x = min(c.amount, d.amount)
+    record "d pays c x"
+    if c.amount > x: push c back with c.amount - x
+    if d.amount > x: push d back with d.amount - x
+```
+
+Ties are broken by member id so the output is deterministic.
+
