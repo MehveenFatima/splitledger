@@ -166,4 +166,18 @@ public final class Money implements Comparable<Money> {
     public int hashCode() {
         return Long.hashCode(paise);
     }
+
+    /** Plain decimal form, e.g. {@code 120.50}; used for storage. */
+    @Override
+    public String toString() {
+        return toRupees().toPlainString();
+    }
+
+    /**
+     * Human friendly form, e.g. {@code Rs 120.50} or {@code -Rs 5.00}.
+     * Uses "Rs" rather than the rupee sign so it prints on every console.
+     */
+    public String format() {
+        return (paise < 0 ? "-" : "") + "Rs " + abs().toRupees().toPlainString();
+    }
 }
