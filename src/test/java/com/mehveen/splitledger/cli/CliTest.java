@@ -188,4 +188,11 @@ class CliTest {
         assertTrue(run("pay riya ghost 10").startsWith("Error:"));
         assertTrue(run("load /definitely/not/here.csv").startsWith("Error:"));
     }
+
+    @Test
+    void exitStopsLoop() {
+        assertFalse(cli.execute("exit"));
+        assertFalse(cli.execute("QUIT"));
+        assertTrue(cli.execute(""));
+    }
 }
