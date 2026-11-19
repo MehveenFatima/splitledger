@@ -217,4 +217,20 @@ public class Cli {
             throw new ValidationException("Invalid date '" + text + "', expected YYYY-MM-DD");
         }
     }
+
+    private void listExpenses(ParsedCommand command) {
+        LocalDate from = command.option("from").map(Cli::parseDate).orElse(null);
+        LocalDate to = command.option("to").map(Cli::parseDate).orElse(null);
+        Category category = command.option("category").map(Category::fromString).orElse(null);
+        List<Expense> found = ledger.expensesBetween(from, to, category);
+        if (command.option("member").isPresent()) {
+            String id = ledger.member(command.option("member").get()).id();
+            found = found.stream().filter(e -> e.involves(id)).toList();
+        }
+        if (found.isEmpty()) {
+            out.println("No expenses found.");
+            return;
+        }
+        found.forEach(out::println);
+    }
 }
