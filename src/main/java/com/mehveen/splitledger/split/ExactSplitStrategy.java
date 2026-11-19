@@ -30,4 +30,15 @@ public class ExactSplitStrategy extends AbstractSplitStrategy {
         }
         return result;
     }
+
+    private static Money toMoney(SplitShare share) {
+        if (share.value().signum() < 0) {
+            throw new ValidationException("Amount for " + share.memberId() + " cannot be negative");
+        }
+        try {
+            return Money.parse(share.value().toPlainString());
+        } catch (IllegalArgumentException e) {
+            throw new ValidationException(e.getMessage());
+        }
+    }
 }
