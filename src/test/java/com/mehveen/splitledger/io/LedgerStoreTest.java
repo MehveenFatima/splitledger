@@ -67,4 +67,11 @@ class LedgerStoreTest {
         assertEquals(SplitType.SHARES, loaded.expenses().get(1).splitType());
         assertEquals(Money.ofRupees(600), loaded.expenses().get(1).shareOf("riya"));
     }
+
+    @Test
+    void writesVersionHeader() throws IOException {
+        Path file = dir.resolve("trip.csv");
+        store.save(sampleLedger(), file);
+        assertEquals(LedgerStore.HEADER, Files.readAllLines(file).get(0));
+    }
 }
