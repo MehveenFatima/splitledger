@@ -27,4 +27,9 @@ class CategoryTest {
         assertTrue(e.getMessage().contains("food"));
         assertTrue(e.getMessage().contains("rent"));
     }
+
+    @Test
+    void labelIsLowercase() {
+        assertEquals("entertainment", Category.ENTERTAINMENT.label());
+    }
 }
