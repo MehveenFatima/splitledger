@@ -22,4 +22,12 @@ public class SplitStrategyFactory {
             strategies.put(strategy.type(), strategy);
         }
     }
+
+    public SplitStrategy forType(SplitType type) {
+        SplitStrategy strategy = strategies.get(type);
+        if (strategy == null) {
+            throw new IllegalArgumentException("No strategy registered for " + type);
+        }
+        return strategy;
+    }
 }
