@@ -1,0 +1,40 @@
+package com.mehveen.splitledger.report;
+
+import com.mehveen.splitledger.ledger.Ledger;
+import com.mehveen.splitledger.model.Category;
+import com.mehveen.splitledger.model.Member;
+import com.mehveen.splitledger.money.Money;
+import com.mehveen.splitledger.split.SplitShare;
+import com.mehveen.splitledger.split.SplitType;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import java.time.LocalDate;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+class LedgerReportTest {
+
+    private static final LocalDate DAY = LocalDate.of(2026, 11, 19);
+
+    private final LedgerReport report = new LedgerReport();
+    private Ledger ledger;
+
+    @BeforeEach
+    void setUp() {
+        ledger = new Ledger();
+        ledger.addMember(new Member("riya", "Riya"));
+        ledger.addMember(new Member("sam", "Sam"));
+    }
+
+    @Test
+    void headerShowsTotals() {
+        ledger.addExpense("Dinner", "riya", Money.ofRupees(500), Category.FOOD, SplitType.EQUAL,
+                List.of(SplitShare.of("riya"), SplitShare.of("sam")), DAY);
+        String text = report.build(ledger);
+        assertTrue(text.contains("Members: 2 | Expenses: 1 | Total spent: Rs 500.00"));
+    }
+}
