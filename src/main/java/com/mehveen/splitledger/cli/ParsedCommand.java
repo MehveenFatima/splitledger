@@ -32,4 +32,12 @@ public record ParsedCommand(List<String> words, Map<String, String> options) {
     public Optional<String> optionalWord(int index) {
         return index < words.size() ? Optional.of(words.get(index)) : Optional.empty();
     }
+
+    public Optional<String> option(String name) {
+        return Optional.ofNullable(options.get(name));
+    }
+
+    public String requireOption(String name) {
+        return option(name).orElseThrow(() -> new ValidationException("Missing option --" + name));
+    }
 }
