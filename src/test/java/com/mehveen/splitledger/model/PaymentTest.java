@@ -17,4 +17,10 @@ class PaymentTest {
     void rejectsSelfPayment() {
         assertThrows(ValidationException.class, () -> new Payment("riya", "riya", Money.ofRupees(1), DAY));
     }
+
+    @Test
+    void rejectsZeroOrNegativeAmount() {
+        assertThrows(ValidationException.class, () -> new Payment("riya", "sam", Money.ZERO, DAY));
+        assertThrows(ValidationException.class, () -> new Payment("riya", "sam", Money.ofRupees(-1), DAY));
+    }
 }
