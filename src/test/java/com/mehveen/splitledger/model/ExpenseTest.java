@@ -51,4 +51,10 @@ class ExpenseTest {
         assertEquals(Category.OTHER, e.category());
         assertEquals(SplitType.EQUAL, e.splitType());
     }
+
+    @Test
+    void rejectsSharesNotMatchingAmount() {
+        assertThrows(ValidationException.class, () -> new Expense(1, "Dinner", "riya", Money.ofRupees(100),
+                Category.FOOD, SplitType.EXACT, shares("riya", "40", "sam", "50"), DAY));
+    }
 }
