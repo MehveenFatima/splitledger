@@ -56,4 +56,9 @@ class MoneyTest {
         assertThrows(IllegalArgumentException.class, () -> Money.parse("  "));
         assertThrows(IllegalArgumentException.class, () -> Money.parse(null));
     }
+
+    @Test
+    void parseTrimsWhitespace() {
+        assertEquals(Money.ofRupees(5), Money.parse("  5.00 "));
+    }
 }
