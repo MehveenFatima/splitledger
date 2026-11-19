@@ -45,4 +45,12 @@ class PercentSplitStrategyTest {
         assertThrows(ValidationException.class, () -> strategy.split(Money.ofRupees(100),
                 List.of(SplitShare.of("a", "100"), SplitShare.of("b", "0"))));
     }
+
+    @Test
+    void roundingStillAddsUp() {
+        Money total = Money.parse("0.07");
+        Map<String, Money> result = strategy.split(total,
+                List.of(SplitShare.of("a", "50"), SplitShare.of("b", "50")));
+        assertEquals(total, result.get("a").plus(result.get("b")));
+    }
 }
