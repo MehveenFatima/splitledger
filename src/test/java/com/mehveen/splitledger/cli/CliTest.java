@@ -145,4 +145,14 @@ class CliTest {
         addGroup();
         assertTrue(run("settle").contains("Everyone is settled up."));
     }
+
+    @Test
+    void expensesFilteredByMember() {
+        addGroup();
+        run("expense add Cab 100 --payer aman --with aman,sam");
+        run("expense add Tea 30 --payer riya --with riya");
+        String out = run("expenses --member sam");
+        assertTrue(out.contains("Cab"));
+        assertFalse(out.contains("Tea"));
+    }
 }
