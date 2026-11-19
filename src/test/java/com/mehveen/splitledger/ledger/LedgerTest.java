@@ -114,4 +114,10 @@ class LedgerTest {
         ledger.recordPayment("sam", "riya", Money.ofRupees(300), NOV_19);
         assertTrue(ledger.isSettled());
     }
+
+    @Test
+    void rejectsPaymentWithUnknownMember() {
+        assertThrows(NotFoundException.class, () -> ledger.recordPayment("zoe", "riya", Money.ofRupees(1), NOV_19));
+        assertTrue(ledger.payments().isEmpty());
+    }
 }
