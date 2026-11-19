@@ -157,4 +157,14 @@ class LedgerTest {
         assertEquals(1, ledger.expensesInvolving("riya").size());
         assertEquals(2, ledger.expensesInvolving("aman").size());
     }
+
+    @Test
+    void filtersByDateRange() {
+        ledger.addExpense("Rent", "sam", Money.ofRupees(300), Category.RENT, SplitType.EQUAL,
+                List.of(SplitShare.of("sam"), SplitShare.of("riya")), NOV_1);
+        dinner("riya", "300");
+        assertEquals(1, ledger.expensesBetween(LocalDate.of(2026, 11, 10), null, null).size());
+        assertEquals(1, ledger.expensesBetween(null, LocalDate.of(2026, 11, 10), null).size());
+        assertEquals(2, ledger.expensesBetween(NOV_1, NOV_19, null).size());
+    }
 }
