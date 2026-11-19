@@ -129,4 +129,11 @@ class MoneyTest {
         assertThrows(IllegalArgumentException.class, () -> ten.allocate(List.of(new BigDecimal("-1"))));
         assertThrows(IllegalArgumentException.class, () -> ten.allocate(0));
     }
+
+    @Test
+    void allocateZeroWeightGetsNothing() {
+        List<Money> parts = Money.ofRupees(10).allocate(List.of(BigDecimal.ZERO, BigDecimal.ONE));
+        assertEquals(Money.ZERO, parts.get(0));
+        assertEquals(Money.ofRupees(10), parts.get(1));
+    }
 }
