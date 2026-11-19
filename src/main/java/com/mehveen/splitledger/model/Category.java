@@ -29,4 +29,8 @@ public enum Category {
             throw new ValidationException("Unknown category '" + text + "'. Use one of: " + options);
         }
     }
+
+    public String label() {
+        return name().toLowerCase(Locale.ROOT);
+    }
 }
