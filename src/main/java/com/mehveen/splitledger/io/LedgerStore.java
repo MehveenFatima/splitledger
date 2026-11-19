@@ -91,4 +91,20 @@ public class LedgerStore {
         }
         return ledger;
     }
+
+    private static void applyRecord(Ledger ledger, List<String> fields) {
+        String type = fields.get(0);
+        switch (type) {
+            case "MEMBER" -> {
+                requireFields(fields, 3);
+                ledger.addMember(new Member(fields.get(1), fields.get(2)));
+            }
+            case "EXPENSE" -> ledger.restoreExpense(decodeExpense(fields));
+            case "PAYMENT" -> {
+                requireFields(fields, 5);
+                ledger.recordPayment(fields.get(2), fields.get(3), Money.parse(fields.get(4)), date(fields.get(1)));
+            }
+            default -> throw new IllegalArgumentException("Unknown record type '" + type + "'");
+        }
+    }
 }
