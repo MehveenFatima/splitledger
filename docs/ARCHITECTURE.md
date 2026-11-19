@@ -42,3 +42,10 @@ SplitLedger is a small layered application. Each layer only depends on the layer
 - **`cli.CommandParser`** handles quoted words and `--options`; **`cli.Cli`** maps commands to
   ledger calls. The CLI receives a `PrintStream` and a `Clock`, which makes it fully unit-testable.
 
+## Error handling
+
+All business rule violations throw a subclass of `LedgerException`
+(`ValidationException`, `NotFoundException`). The CLI catches these, prints `Error: <message>`
+and keeps running, so a typo never loses the user's data. Programming errors (for example a split
+whose parts do not add up) throw `IllegalStateException` and are covered by tests.
+
