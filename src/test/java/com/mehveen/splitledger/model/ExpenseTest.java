@@ -72,4 +72,12 @@ class ExpenseTest {
         assertEquals(Money.ofRupees(10), e.shareOf("riya"));
         assertEquals(Money.ZERO, e.shareOf("sam"));
     }
+
+    @Test
+    void involvesPayerAndParticipants() {
+        Expense e = new Expense(1, "Gift", "riya", Money.ofRupees(10), null, null, shares("sam", "10"), DAY);
+        assertTrue(e.involves("riya"));
+        assertTrue(e.involves("sam"));
+        assertFalse(e.involves("aman"));
+    }
 }
