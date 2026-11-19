@@ -18,4 +18,9 @@ class MoneyTest {
     void ofPaiseZeroReturnsSharedZero() {
         assertSame(Money.ZERO, Money.ofPaise(0));
     }
+
+    @Test
+    void ofRupeesConvertsToPaise() {
+        assertEquals(12_500L, Money.ofRupees(125).paise());
+    }
 }
