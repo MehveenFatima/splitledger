@@ -82,4 +82,59 @@ public final class Money implements Comparable<Money> {
     public static Money min(Money a, Money b) {
         return a.compareTo(b) <= 0 ? a : b;
     }
+
+    /**
+     * Splits this amount into parts proportional to the given weights.
+     * Every paisa is allocated: leftover paise go to the parts with the
+     * largest fractional remainder (earlier parts win ties), so the parts
+     * always add up exactly to this amount.
+     */
+    public List<Money> allocate(List<BigDecimal> weights) {
+        if (paise < 0) {
+            throw new IllegalArgumentException("Cannot allocate a negative amount");
+        }
+        if (weights == null || weights.isEmpty()) {
+            throw new IllegalArgumentException("At least one weight is required");
+        }
+        BigDecimal totalWeight = BigDecimal.ZERO;
+        for (BigDecimal weight : weights) {
+            if (weight == null || weight.signum() < 0) {
+                throw new IllegalArgumentException("Weights must be zero or positive");
+            }
+            totalWeight = totalWeight.add(weight);
+        }
+        if (totalWeight.signum() == 0) {
+            throw new IllegalArgumentException("Total weight must be greater than zero");
+        }
+
+        int n = weights.size();
+        long[] parts = new long[n];
+        BigDecimal[] remainders = new BigDecimal[n];
+        long allocated = 0;
+        BigDecimal amount = BigDecimal.valueOf(paise);
+        for (int i = 0; i < n; i++) {
+            BigDecimal exact = amount.multiply(weights.get(i)).divide(totalWeight, 10, RoundingMode.DOWN);
+            long floor = exact.setScale(0, RoundingMode.DOWN).longValueExact();
+            parts[i] = floor;
+            remainders[i] = exact.subtract(BigDecimal.valueOf(floor));
+            allocated += floor;
+        }
+
+        List<Integer> order = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            order.add(i);
+        }
+        order.sort(Comparator.<Integer, BigDecimal>comparing(i -> remainders[i]).reversed()
+                .thenComparing(i -> i));
+        long leftover = paise - allocated;
+        for (int k = 0; k < leftover; k++) {
+            parts[order.get(k % n)]++;
+        }
+
+        List<Money> result = new ArrayList<>(n);
+        for (long part : parts) {
+            result.add(ofPaise(part));
+        }
+        return Collections.unmodifiableList(result);
+    }
 }
