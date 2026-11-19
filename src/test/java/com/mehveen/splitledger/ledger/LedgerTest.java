@@ -174,4 +174,12 @@ class LedgerTest {
         assertEquals(1, ledger.expensesBetween(null, null, Category.FOOD).size());
         assertTrue(ledger.expensesBetween(null, null, Category.RENT).isEmpty());
     }
+
+    @Test
+    void removeExpenseUpdatesBalances() {
+        Expense expense = dinner("riya", "900");
+        ledger.removeExpense(expense.id());
+        assertTrue(ledger.isSettled());
+        assertThrows(NotFoundException.class, () -> ledger.removeExpense(expense.id()));
+    }
 }
