@@ -65,4 +65,8 @@ public class DebtSimplifier {
         }
         return List.copyOf(transfers);
     }
+
+    public static Money totalMoved(List<Transfer> transfers) {
+        return transfers.stream().map(Transfer::amount).reduce(Money.ZERO, Money::plus);
+    }
 }
