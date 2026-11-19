@@ -39,4 +39,9 @@ class MoneyTest {
         assertEquals(1050L, Money.parse("10.5").paise());
         assertEquals(1099L, Money.parse("10.99").paise());
     }
+
+    @Test
+    void parseAcceptsTrailingZeros() {
+        assertEquals(150L, Money.parse("1.500").paise());
+    }
 }
