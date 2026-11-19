@@ -15,4 +15,18 @@ public enum Category {
     SHOPPING,
     ENTERTAINMENT,
     OTHER;
+
+    public static Category fromString(String text) {
+        if (text == null || text.isBlank()) {
+            return OTHER;
+        }
+        try {
+            return valueOf(text.trim().toUpperCase(Locale.ROOT));
+        } catch (IllegalArgumentException e) {
+            String options = Arrays.stream(values())
+                    .map(c -> c.name().toLowerCase(Locale.ROOT))
+                    .collect(Collectors.joining(", "));
+            throw new ValidationException("Unknown category '" + text + "'. Use one of: " + options);
+        }
+    }
 }
