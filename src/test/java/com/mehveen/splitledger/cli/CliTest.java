@@ -131,4 +131,12 @@ class CliTest {
         assertTrue(out.contains("2 payment(s)"));
         assertTrue(out.contains("aman pays riya Rs 300.00"));
     }
+
+    @Test
+    void paySettlesMember() {
+        addGroup();
+        run("expense add Dinner 900 --payer riya");
+        run("pay aman riya 300");
+        assertTrue(run("balances").contains("aman is settled up"));
+    }
 }
