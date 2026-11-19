@@ -50,4 +50,12 @@ public final class Money implements Comparable<Money> {
         }
         return ofPaise(value.movePointRight(2).longValueExact());
     }
+
+    public Money plus(Money other) {
+        return ofPaise(Math.addExact(paise, other.paise));
+    }
+
+    public Money minus(Money other) {
+        return ofPaise(Math.subtractExact(paise, other.paise));
+    }
 }
