@@ -166,4 +166,9 @@ public class Ledger {
         String id = member(memberId).id();
         return expenses.stream().map(e -> e.shareOf(id)).reduce(Money.ZERO, Money::plus);
     }
+
+    public List<Expense> expensesInvolving(String memberId) {
+        String id = member(memberId).id();
+        return expenses.stream().filter(e -> e.involves(id)).toList();
+    }
 }
