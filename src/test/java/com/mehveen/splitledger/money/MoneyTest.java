@@ -86,4 +86,12 @@ class MoneyTest {
         assertFalse(Money.ZERO.isPositive());
         assertFalse(Money.ZERO.isNegative());
     }
+
+    @Test
+    void minReturnsSmaller() {
+        Money small = Money.ofRupees(1);
+        Money big = Money.ofRupees(2);
+        assertSame(small, Money.min(small, big));
+        assertSame(small, Money.min(big, small));
+    }
 }
