@@ -63,4 +63,14 @@ public class LedgerReport {
         }
         return Math.round(part.paise() * 100.0 / total.paise());
     }
+
+    private void appendSettlement(StringBuilder out, Ledger ledger) {
+        List<Transfer> transfers = simplifier.simplify(ledger.balances());
+        out.append("\nSettle up:\n");
+        if (transfers.isEmpty()) {
+            out.append("  Everyone is settled up.\n");
+            return;
+        }
+        transfers.forEach(t -> out.append("  ").append(t).append('\n'));
+    }
 }
