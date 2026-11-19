@@ -53,4 +53,20 @@ public class Ledger {
         members.put(member.id(), member);
         return member;
     }
+
+    public Member member(String id) {
+        Member member = id == null ? null : members.get(id.trim().toLowerCase(java.util.Locale.ROOT));
+        if (member == null) {
+            throw new NotFoundException("No member with id '" + id + "'");
+        }
+        return member;
+    }
+
+    public boolean hasMember(String id) {
+        return id != null && members.containsKey(id.trim().toLowerCase(java.util.Locale.ROOT));
+    }
+
+    public List<Member> members() {
+        return List.copyOf(members.values());
+    }
 }
