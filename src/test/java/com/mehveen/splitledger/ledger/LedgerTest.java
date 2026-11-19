@@ -211,4 +211,10 @@ class LedgerTest {
         assertThrows(ValidationException.class, () -> ledger.removeMember("sam"));
         assertTrue(ledger.hasMember("sam"));
     }
+
+    @Test
+    void keepsMemberReferencedByPayment() {
+        ledger.recordPayment("aman", "sam", Money.ofRupees(5), NOV_19);
+        assertThrows(ValidationException.class, () -> ledger.removeMember("aman"));
+    }
 }
