@@ -57,4 +57,10 @@ class CliTest {
     void memberAddDerivesId() {
         assertTrue(run("member add \"Riya Sharma\"").contains("Added Riya Sharma (id: riya)"));
     }
+
+    @Test
+    void memberAddWithCustomId() {
+        run("member add \"Riya Sharma\" --id rs");
+        assertTrue(cli.ledger().hasMember("rs"));
+    }
 }
