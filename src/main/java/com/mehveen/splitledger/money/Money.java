@@ -137,4 +137,11 @@ public final class Money implements Comparable<Money> {
         }
         return Collections.unmodifiableList(result);
     }
+
+    public List<Money> allocate(int parts) {
+        if (parts <= 0) {
+            throw new IllegalArgumentException("Number of parts must be positive");
+        }
+        return allocate(Collections.nCopies(parts, BigDecimal.ONE));
+    }
 }
