@@ -25,8 +25,9 @@ computes a **minimal settle-up plan**: with `n` people it never needs more than 
 - **Categories and reports**: spending per category, per person, top spender and biggest expense
 - **Filters**: list expenses by member, category or date range
 - **Save and load** a ledger as a readable CSV file
+- **Export to Markdown** with balance and expense tables and a settle-up checklist
 - **Script mode** to replay a list of commands (great for demos and CI smoke tests)
-- **164 unit tests** covering money arithmetic, every split type, the settlement algorithm (including randomized property tests), storage and the CLI
+- **171 unit tests** covering money arithmetic, every split type, the settlement algorithm (including randomized property tests), storage and the CLI
 
 ## Quick start
 
@@ -85,6 +86,7 @@ Settle everyone in 2 payment(s):
 | `report` | Full summary: totals, balances, categories and settle-up plan. |
 | `stats` | Total, average per member, top spender and biggest expense. |
 | `save <file>` / `load <file>` | Store or restore the ledger. |
+| `export <file.md> [--title t]` | Write a Markdown summary (tables + settle-up checklist) to share with the group. |
 | `help` / `exit` | Show help / quit. |
 
 ### Expense options
@@ -150,7 +152,7 @@ More detail in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 ## Running the tests
 
 ```bash
-mvn test        # 164 unit tests
+mvn test        # 171 unit tests
 mvn verify      # tests + JaCoCo coverage report in target/site/jacoco/index.html
 ```
 
@@ -167,7 +169,8 @@ Dependabot keeps Maven and Actions versions up to date.
 
 - [ ] Multiple currencies with conversion rates
 - [ ] Recurring expenses (monthly rent, subscriptions)
-- [ ] Export the report as Markdown or HTML
+- [x] Export the report as Markdown
+- [ ] Export the report as HTML
 - [ ] REST API version with Spring Boot
 
 ## Contributing
