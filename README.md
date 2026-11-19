@@ -134,3 +134,16 @@ src/main/java/com/mehveen/splitledger
 
 More detail in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
+## Design decisions
+
+- **Money as `long` paise, never `double`.** Floating point cannot represent 0.10 exactly; integers can.
+  Splitting uses the *largest remainder method* so the parts always add up to the original amount.
+- **Strategy pattern for splits.** Each split type is a small class behind the `SplitStrategy`
+  interface, and `AbstractSplitStrategy` (template method) holds the shared validation. Adding a new
+  split type means adding one class and registering it in `SplitStrategyFactory`.
+- **Immutable domain objects.** `Money`, `Member`, `Payment` and `Transfer` are immutable values and
+  `Expense` cannot change after creation, which keeps the balance calculation simple and safe.
+- **Deterministic output.** Ties in the settlement heaps are broken by member id, so the same
+  ledger always produces the same plan (important for tests and for users).
+- **No dependencies.** Even CSV handling is hand-written, so the jar runs anywhere Java 17 runs.
+
