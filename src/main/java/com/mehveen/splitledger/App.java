@@ -49,4 +49,16 @@ public final class App {
             }
         }
     }
+
+    public static void main(String[] args) throws IOException {
+        Cli cli = new Cli(new Ledger(), System.out, Clock.systemDefaultZone());
+        if (args.length == 2 && "--script".equals(args[0])) {
+            runScript(cli, Path.of(args[1]));
+            return;
+        }
+        if (args.length == 1 && Files.exists(Path.of(args[0]))) {
+            cli = new Cli(new LedgerStore().load(Path.of(args[0])), System.out, Clock.systemDefaultZone());
+        }
+        interactive(cli);
+    }
 }
