@@ -34,4 +34,20 @@ public final class Money implements Comparable<Money> {
     public static Money ofRupees(long rupees) {
         return ofPaise(Math.multiplyExact(rupees, 100L));
     }
+
+    public static Money parse(String text) {
+        if (text == null || text.isBlank()) {
+            throw new IllegalArgumentException("Amount is required");
+        }
+        BigDecimal value;
+        try {
+            value = new BigDecimal(text.trim());
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Invalid amount: " + text);
+        }
+        if (value.stripTrailingZeros().scale() > 2) {
+            throw new IllegalArgumentException("Amount can have at most 2 decimal places: " + text);
+        }
+        return ofPaise(value.movePointRight(2).longValueExact());
+    }
 }
