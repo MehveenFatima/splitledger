@@ -152,4 +152,12 @@ public class Ledger {
     public Money totalSpent() {
         return expenses.stream().map(Expense::amount).reduce(Money.ZERO, Money::plus);
     }
+
+    public Map<Category, Money> totalsByCategory() {
+        Map<Category, Money> totals = new EnumMap<>(Category.class);
+        for (Expense expense : expenses) {
+            totals.merge(expense.category(), expense.amount(), Money::plus);
+        }
+        return Collections.unmodifiableMap(totals);
+    }
 }
