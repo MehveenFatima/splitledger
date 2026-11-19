@@ -29,4 +29,17 @@ public record Member(String id, String name) {
         }
         name = name.trim();
     }
+
+    /** Creates a member whose id is derived from the first word of the name. */
+    public static Member of(String name) {
+        if (name == null || name.isBlank()) {
+            throw new ValidationException("Member name is required");
+        }
+        String firstWord = name.trim().split("\\s+")[0];
+        String id = firstWord.toLowerCase(Locale.ROOT).replaceAll("[^a-z0-9_-]", "");
+        if (id.length() > 20) {
+            id = id.substring(0, 20);
+        }
+        return new Member(id, name);
+    }
 }
