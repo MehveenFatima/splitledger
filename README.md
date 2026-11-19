@@ -28,3 +28,22 @@ computes a **minimal settle-up plan**: with `n` people it never needs more than 
 - **Script mode** to replay a list of commands (great for demos and CI smoke tests)
 - **164 unit tests** covering money arithmetic, every split type, the settlement algorithm (including randomized property tests), storage and the CLI
 
+## Quick start
+
+Requirements: **Java 17+** and **Maven 3.8+**.
+
+```bash
+git clone https://github.com/MehveenFatima/splitledger.git
+cd splitledger
+mvn package                      # compiles and runs all tests
+java -jar target/splitledger-1.0.0.jar
+```
+
+Or use the helper script, which builds the jar on first run:
+
+```bash
+./scripts/run.sh                                   # interactive
+./scripts/run.sh examples/sample-ledger.csv        # open a saved ledger
+./scripts/run.sh --script examples/demo-trip.txt   # run the Goa trip demo
+```
+
