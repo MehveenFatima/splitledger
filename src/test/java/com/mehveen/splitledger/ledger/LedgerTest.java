@@ -204,4 +204,11 @@ class LedgerTest {
         ledger.removeMember("sam");
         assertFalse(ledger.hasMember("sam"));
     }
+
+    @Test
+    void keepsMemberWithHistory() {
+        dinner("riya", "300");
+        assertThrows(ValidationException.class, () -> ledger.removeMember("sam"));
+        assertTrue(ledger.hasMember("sam"));
+    }
 }
