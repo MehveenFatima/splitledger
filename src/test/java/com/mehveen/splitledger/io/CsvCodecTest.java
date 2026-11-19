@@ -19,4 +19,9 @@ class CsvCodecTest {
     void quotesFieldsWithCommas() {
         assertEquals("\"Dinner, drinks\"", CsvCodec.escape("Dinner, drinks"));
     }
+
+    @Test
+    void doublesEmbeddedQuotes() {
+        assertEquals("\"The \"\"best\"\" pizza\"", CsvCodec.escape("The \"best\" pizza"));
+    }
 }
