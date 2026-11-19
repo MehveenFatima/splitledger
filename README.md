@@ -69,3 +69,21 @@ Settle everyone in 2 payment(s):
   sam pays aman Rs 1066.66
 ```
 
+## Commands
+
+| Command | What it does |
+|---|---|
+| `member add <name> [--id <handle>]` | Add a person. The id defaults to the first name in lowercase. |
+| `member remove <id>` | Remove a person who has no expenses or payments. |
+| `members` | List members with their current balance. |
+| `expense add <description> <amount> --payer <id> [options]` | Record an expense (options below). |
+| `expense remove <id>` | Delete an expense, e.g. `expense remove #3`. |
+| `expenses [--member id] [--category c] [--from date] [--to date]` | List and filter expenses. |
+| `pay <from> <to> <amount> [--date d]` | Record a settle-up payment. |
+| `balances` | Who owes and who is owed, in plain words. |
+| `settle` | The fewest payments that settle everyone. |
+| `report` | Full summary: totals, balances, categories and settle-up plan. |
+| `stats` | Total, average per member, top spender and biggest expense. |
+| `save <file>` / `load <file>` | Store or restore the ledger. |
+| `help` / `exit` | Show help / quit. |
+
