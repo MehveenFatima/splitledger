@@ -78,4 +78,8 @@ public final class Money implements Comparable<Money> {
     public boolean isNegative() {
         return paise < 0;
     }
+
+    public static Money min(Money a, Money b) {
+        return a.compareTo(b) <= 0 ? a : b;
+    }
 }
