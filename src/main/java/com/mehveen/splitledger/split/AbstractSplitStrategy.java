@@ -49,4 +49,12 @@ public abstract class AbstractSplitStrategy implements SplitStrategy {
             throw new IllegalStateException("Split parts add up to " + sum + " instead of " + total);
         }
     }
+
+    protected static Map<String, Money> zip(List<SplitShare> shares, List<Money> parts) {
+        Map<String, Money> result = new LinkedHashMap<>();
+        for (int i = 0; i < shares.size(); i++) {
+            result.put(shares.get(i).memberId(), parts.get(i));
+        }
+        return result;
+    }
 }
