@@ -120,4 +120,11 @@ class LedgerTest {
         assertThrows(NotFoundException.class, () -> ledger.recordPayment("zoe", "riya", Money.ofRupees(1), NOV_19));
         assertTrue(ledger.payments().isEmpty());
     }
+
+    @Test
+    void totalSpentAddsExpenses() {
+        dinner("riya", "100.50");
+        dinner("sam", "99.50");
+        assertEquals(Money.ofRupees(200), ledger.totalSpent());
+    }
 }
