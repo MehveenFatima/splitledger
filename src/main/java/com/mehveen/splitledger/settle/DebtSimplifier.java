@@ -37,4 +37,32 @@ public class DebtSimplifier {
             throw new IllegalArgumentException("Balances must add up to zero but add up to " + Money.ofPaise(sum));
         }
     }
+
+    public List<Transfer> simplify(Map<String, Money> balances) {
+        requireBalanced(balances);
+        PriorityQueue<Position> creditors = new PriorityQueue<>(LARGEST_FIRST);
+        PriorityQueue<Position> debtors = new PriorityQueue<>(LARGEST_FIRST);
+        balances.forEach((id, balance) -> {
+            if (balance.isPositive()) {
+                creditors.add(new Position(id, balance.paise()));
+            } else if (balance.isNegative()) {
+                debtors.add(new Position(id, -balance.paise()));
+            }
+        });
+
+        List<Transfer> transfers = new ArrayList<>();
+        while (!creditors.isEmpty() && !debtors.isEmpty()) {
+            Position creditor = creditors.poll();
+            Position debtor = debtors.poll();
+            long amount = Math.min(creditor.paise(), debtor.paise());
+            transfers.add(new Transfer(debtor.memberId(), creditor.memberId(), Money.ofPaise(amount)));
+            if (creditor.paise() > amount) {
+                creditors.add(new Position(creditor.memberId(), creditor.paise() - amount));
+            }
+            if (debtor.paise() > amount) {
+                debtors.add(new Position(debtor.memberId(), debtor.paise() - amount));
+            }
+        }
+        return List.copyOf(transfers);
+    }
 }
