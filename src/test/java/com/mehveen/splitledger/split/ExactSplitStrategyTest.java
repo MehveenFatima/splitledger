@@ -22,4 +22,11 @@ class ExactSplitStrategyTest {
         assertEquals(Money.parse("650.50"), result.get("a"));
         assertEquals(Money.parse("349.50"), result.get("b"));
     }
+
+    @Test
+    void rejectsAmountsThatDoNotAddUp() {
+        ValidationException e = assertThrows(ValidationException.class, () -> strategy.split(Money.ofRupees(1000),
+                List.of(SplitShare.of("a", "600"), SplitShare.of("b", "300"))));
+        assertTrue(e.getMessage().contains("Rs 900.00"));
+    }
 }
