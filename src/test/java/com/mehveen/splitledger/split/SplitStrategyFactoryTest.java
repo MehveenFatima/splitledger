@@ -16,4 +16,10 @@ class SplitStrategyFactoryTest {
             assertEquals(type, factory.forType(type).type());
         }
     }
+
+    @Test
+    void failsForMissingStrategy() {
+        SplitStrategyFactory factory = new SplitStrategyFactory(List.of(new EqualSplitStrategy()));
+        assertThrows(IllegalArgumentException.class, () -> factory.forType(SplitType.SHARES));
+    }
 }
