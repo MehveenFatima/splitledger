@@ -136,4 +136,11 @@ class MoneyTest {
         assertEquals(Money.ZERO, parts.get(0));
         assertEquals(Money.ofRupees(10), parts.get(1));
     }
+
+    @Test
+    void compareToOrdersByAmount() {
+        assertTrue(Money.ofRupees(1).compareTo(Money.ofRupees(2)) < 0);
+        assertTrue(Money.ofRupees(2).compareTo(Money.ofRupees(1)) > 0);
+        assertEquals(0, Money.ofRupees(2).compareTo(Money.parse("2.00")));
+    }
 }
