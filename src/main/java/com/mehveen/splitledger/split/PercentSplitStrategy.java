@@ -17,4 +17,20 @@ public class PercentSplitStrategy extends AbstractSplitStrategy {
     public SplitType type() {
         return SplitType.PERCENT;
     }
+
+    private static List<BigDecimal> validatedPercents(List<SplitShare> shares) {
+        List<BigDecimal> percents = new ArrayList<>();
+        BigDecimal sum = BigDecimal.ZERO;
+        for (SplitShare share : shares) {
+            if (share.value().signum() <= 0) {
+                throw new ValidationException("Percent for " + share.memberId() + " must be greater than zero");
+            }
+            percents.add(share.value());
+            sum = sum.add(share.value());
+        }
+        if (sum.compareTo(HUNDRED) != 0) {
+            throw new ValidationException("Percentages add up to " + sum.toPlainString() + " instead of 100");
+        }
+        return percents;
+    }
 }
