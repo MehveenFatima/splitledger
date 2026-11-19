@@ -16,3 +16,10 @@ Thanks for your interest! This guide explains how to propose a change.
 - Throw `ValidationException` / `NotFoundException` for user errors so the CLI can show them.
 - Four-space indentation (see `.editorconfig`).
 
+## Pull requests
+
+1. Create a branch from `main`.
+2. Add or update unit tests for every behaviour change.
+3. Use clear commit messages in the form `type(scope): summary`, for example
+   `feat(split): add weighted split` or `fix(io): handle empty share list`.
+4. Open a pull request and fill in the template.
