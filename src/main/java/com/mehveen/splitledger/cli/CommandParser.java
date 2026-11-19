@@ -46,4 +46,22 @@ public final class CommandParser {
         }
         return tokens;
     }
+
+    private static ParsedCommand toCommand(List<String> tokens) {
+        List<String> words = new ArrayList<>();
+        Map<String, String> options = new LinkedHashMap<>();
+        for (int i = 0; i < tokens.size(); i++) {
+            String token = tokens.get(i);
+            if (token.startsWith("--") && token.length() > 2) {
+                String name = token.substring(2).toLowerCase(Locale.ROOT);
+                if (i + 1 >= tokens.size() || tokens.get(i + 1).startsWith("--")) {
+                    throw new ValidationException("Option --" + name + " needs a value");
+                }
+                options.put(name, tokens.get(++i));
+            } else {
+                words.add(token);
+            }
+        }
+        return new ParsedCommand(words, options);
+    }
 }
