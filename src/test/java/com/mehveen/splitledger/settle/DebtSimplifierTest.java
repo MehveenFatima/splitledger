@@ -78,4 +78,12 @@ class DebtSimplifierTest {
     void rejectsUnbalancedInput() {
         assertThrows(IllegalArgumentException.class, () -> simplifier.simplify(balances("a", 100, "b", -50)));
     }
+
+    @Test
+    void tiesAreDeterministic() {
+        List<Transfer> first = simplifier.simplify(balances("x", 100, "a", 100, "m", -100, "b", -100));
+        List<Transfer> second = simplifier.simplify(balances("b", -100, "m", -100, "a", 100, "x", 100));
+        assertEquals(first, second);
+        assertEquals(new Transfer("b", "a", Money.ofRupees(100)), first.get(0));
+    }
 }
