@@ -47,3 +47,25 @@ Or use the helper script, which builds the jar on first run:
 ./scripts/run.sh --script examples/demo-trip.txt   # run the Goa trip demo
 ```
 
+## Example session
+
+```text
+splitledger> member add "Riya Sharma"
+Added Riya Sharma (id: riya)
+splitledger> member add "Aman Verma"
+Added Aman Verma (id: aman)
+splitledger> member add "Sam Khan"
+Added Sam Khan (id: sam)
+splitledger> expense add "Flight tickets" 18000 --payer aman --category travel --date 2026-11-14
+Added expense #1 2026-11-14 Flight tickets Rs 18000.00 paid by aman [travel, equal]
+  riya owes Rs 6000.00
+  aman owes Rs 6000.00
+  sam owes Rs 6000.00
+splitledger> expense add "Villa rent" 12000 --payer sam --split shares --with riya:1,aman:1,sam:2
+...
+splitledger> settle
+Settle everyone in 2 payment(s):
+  riya pays aman Rs 2866.67
+  sam pays aman Rs 1066.66
+```
+
