@@ -96,4 +96,14 @@ class DebtSimplifierTest {
             apply(balances, transfers).values().forEach(left -> assertEquals(Money.ZERO, left));
         }
     }
+
+    @Test
+    void atMostNMinusOneTransfersRandomized() {
+        Random random = new Random(7);
+        for (int round = 0; round < 200; round++) {
+            int n = 2 + random.nextInt(9);
+            List<Transfer> transfers = simplifier.simplify(randomBalances(random, n));
+            assertTrue(transfers.size() <= n - 1, "too many transfers: " + transfers.size());
+        }
+    }
 }
