@@ -127,4 +127,15 @@ class LedgerTest {
         dinner("sam", "99.50");
         assertEquals(Money.ofRupees(200), ledger.totalSpent());
     }
+
+    @Test
+    void totalsByCategory() {
+        dinner("riya", "300");
+        ledger.addExpense("Cab", "aman", Money.ofRupees(120), Category.TRAVEL, SplitType.EQUAL,
+                List.of(SplitShare.of("aman"), SplitShare.of("sam")), NOV_19);
+        Map<Category, Money> totals = ledger.totalsByCategory();
+        assertEquals(Money.ofRupees(300), totals.get(Category.FOOD));
+        assertEquals(Money.ofRupees(120), totals.get(Category.TRAVEL));
+        assertFalse(totals.containsKey(Category.RENT));
+    }
 }
