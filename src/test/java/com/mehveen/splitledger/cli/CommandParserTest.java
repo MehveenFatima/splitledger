@@ -45,4 +45,10 @@ class CommandParserTest {
     void optionNamesAreLowercased() {
         assertEquals("food", CommandParser.parse("expenses --CATEGORY food").requireOption("category"));
     }
+
+    @Test
+    void optionNeedsValue() {
+        assertThrows(ValidationException.class, () -> CommandParser.parse("expense add --payer"));
+        assertThrows(ValidationException.class, () -> CommandParser.parse("expense add --payer --with a"));
+    }
 }
