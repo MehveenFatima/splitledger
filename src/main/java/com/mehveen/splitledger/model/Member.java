@@ -37,6 +37,10 @@ public record Member(String id, String name) {
         }
         String firstWord = name.trim().split("\\s+")[0];
         String id = firstWord.toLowerCase(Locale.ROOT).replaceAll("[^a-z0-9_-]", "");
+        if (id.isEmpty()) {
+            throw new ValidationException("Could not create an id from '" + name.trim()
+                    + "'. Choose one with --id, for example: member add \"" + name.trim() + "\" --id friend1");
+        }
         if (id.length() > 20) {
             id = id.substring(0, 20);
         }
