@@ -27,4 +27,9 @@ class CommandParserTest {
     void emptyQuotesGiveEmptyWord() {
         assertEquals(List.of("a", "", "b"), CommandParser.tokenize("a \"\" b"));
     }
+
+    @Test
+    void rejectsMissingClosingQuote() {
+        assertThrows(ValidationException.class, () -> CommandParser.tokenize("expense add \"Dinner"));
+    }
 }
