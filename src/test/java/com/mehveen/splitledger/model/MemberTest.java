@@ -32,4 +32,11 @@ class MemberTest {
     void rejectsTooLongId() {
         assertThrows(ValidationException.class, () -> new Member("a".repeat(21), "Long"));
     }
+
+    @Test
+    void ofDerivesIdFromFirstWord() {
+        Member member = Member.of("Aman Verma");
+        assertEquals("aman", member.id());
+        assertEquals("Aman Verma", member.name());
+    }
 }
