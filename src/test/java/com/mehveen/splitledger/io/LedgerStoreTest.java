@@ -57,4 +57,14 @@ class LedgerStoreTest {
         assertEquals(original.balances(), loaded.balances());
         assertEquals("Dinner, \"special\"", loaded.expenses().get(0).description());
     }
+
+    @Test
+    void keepsExpenseIdsAndSplitType() {
+        Path file = dir.resolve("trip.csv");
+        store.save(sampleLedger(), file);
+        Ledger loaded = store.load(file);
+        assertEquals(2, loaded.expenses().get(1).id());
+        assertEquals(SplitType.SHARES, loaded.expenses().get(1).splitType());
+        assertEquals(Money.ofRupees(600), loaded.expenses().get(1).shareOf("riya"));
+    }
 }
