@@ -87,4 +87,14 @@ class LedgerTest {
         assertEquals(Money.ofRupees(-300), balances.get("aman"));
         assertEquals(Money.ofRupees(-300), balances.get("sam"));
     }
+
+    @Test
+    void balancesSumToZero() {
+        dinner("riya", "1000");
+        dinner("aman", "333.33");
+        ledger.addExpense("Rent", "sam", Money.ofRupees(30000), Category.RENT, SplitType.SHARES,
+                List.of(SplitShare.of("riya", "2"), SplitShare.of("aman", "1"), SplitShare.of("sam", "1")), NOV_1);
+        Money sum = ledger.balances().values().stream().reduce(Money.ZERO, Money::plus);
+        assertEquals(Money.ZERO, sum);
+    }
 }
