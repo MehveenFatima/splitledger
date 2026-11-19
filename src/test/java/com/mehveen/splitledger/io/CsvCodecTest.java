@@ -39,4 +39,10 @@ class CsvCodecTest {
     void rejectsLineBreaks() {
         assertThrows(IllegalArgumentException.class, () -> CsvCodec.escape("two\nlines"));
     }
+
+    @Test
+    void decodesSimpleAndEmptyFields() {
+        assertEquals(List.of("a", "", "c"), CsvCodec.decode("a,,c"));
+        assertEquals(List.of(""), CsvCodec.decode(""));
+    }
 }
