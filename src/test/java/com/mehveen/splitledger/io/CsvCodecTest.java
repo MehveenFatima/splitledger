@@ -24,4 +24,9 @@ class CsvCodecTest {
     void doublesEmbeddedQuotes() {
         assertEquals("\"The \"\"best\"\" pizza\"", CsvCodec.escape("The \"best\" pizza"));
     }
+
+    @Test
+    void quotesSurroundingWhitespace() {
+        assertEquals("\" padded \"", CsvCodec.escape(" padded "));
+    }
 }
