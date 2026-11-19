@@ -23,4 +23,10 @@ class PaymentTest {
         assertThrows(ValidationException.class, () -> new Payment("riya", "sam", Money.ZERO, DAY));
         assertThrows(ValidationException.class, () -> new Payment("riya", "sam", Money.ofRupees(-1), DAY));
     }
+
+    @Test
+    void toStringReadsNaturally() {
+        assertEquals("2026-11-19 sam paid riya Rs 250.00",
+                new Payment("sam", "riya", Money.ofRupees(250), DAY).toString());
+    }
 }
