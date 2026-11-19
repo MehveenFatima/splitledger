@@ -171,4 +171,12 @@ public class Ledger {
         String id = member(memberId).id();
         return expenses.stream().filter(e -> e.involves(id)).toList();
     }
+
+    public List<Expense> expensesBetween(LocalDate from, LocalDate to, Category category) {
+        return expenses.stream()
+                .filter(e -> from == null || !e.date().isBefore(from))
+                .filter(e -> to == null || !e.date().isAfter(to))
+                .filter(e -> category == null || e.category() == category)
+                .toList();
+    }
 }
