@@ -95,4 +95,10 @@ public final class Expense {
     public boolean involves(String memberId) {
         return payerId.equals(memberId) || shares.containsKey(memberId);
     }
+
+    @Override
+    public String toString() {
+        return "#" + id + " " + date + " " + description + " " + amount.format()
+                + " paid by " + payerId + " [" + category.label() + ", " + splitType.name().toLowerCase() + "]";
+    }
 }
