@@ -103,3 +103,16 @@ Settle everyone in 2 payment(s):
 | percent | `--with riya:50,aman:25,sam:25` | 600 / 300 / 300 (must add up to 100) |
 | shares | `--with riya:2,aman:1,sam:1` | 600 / 300 / 300 |
 
+## How settle-up works
+
+1. Every expense credits the payer with the full amount and debits each participant with their share.
+   Payments credit the payer and debit the receiver. The balances always add up to zero.
+2. Members with a positive balance (owed money) go into one max-heap, members with a negative
+   balance (owe money) into another.
+3. Repeatedly take the largest creditor and the largest debtor, make the debtor pay
+   `min(owed, owing)`, and push back whoever still has something left.
+
+Each step fully settles at least one person, so there are at most `n - 1` payments and the
+algorithm runs in **O(n log n)** time. See [docs/ALGORITHM.md](docs/ALGORITHM.md) for a worked
+example and the proof sketch.
+
