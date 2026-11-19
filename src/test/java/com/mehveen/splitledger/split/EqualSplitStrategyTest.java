@@ -54,4 +54,10 @@ class EqualSplitStrategyTest {
         assertThrows(ValidationException.class, () -> strategy.split(Money.ofRupees(10),
                 List.of(SplitShare.of("a"), SplitShare.of("A"))));
     }
+
+    @Test
+    void resultIsReadOnly() {
+        Map<String, Money> result = strategy.split(Money.ofRupees(10), List.of(SplitShare.of("a")));
+        assertThrows(UnsupportedOperationException.class, () -> result.put("b", Money.ZERO));
+    }
 }
