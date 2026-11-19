@@ -44,4 +44,11 @@ class ExpenseTest {
         assertThrows(ValidationException.class, () ->
                 new Expense(2, " ", "riya", Money.ofRupees(10), null, null, shares("riya", "10"), DAY));
     }
+
+    @Test
+    void defaultsCategoryAndSplitType() {
+        Expense e = new Expense(1, "Misc", "riya", Money.ofRupees(10), null, null, shares("riya", "10"), DAY);
+        assertEquals(Category.OTHER, e.category());
+        assertEquals(SplitType.EQUAL, e.splitType());
+    }
 }
