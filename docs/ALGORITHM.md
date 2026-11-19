@@ -69,3 +69,9 @@ fast, simple and never worse than `n - 1`.
 | **Total time** | **O(n log n)** |
 | **Extra space** | **O(n)** |
 
+## How it is tested
+
+`DebtSimplifierTest` covers the simple cases (two people, one creditor with many debtors, chains)
+and runs **randomized property tests**: for hundreds of random balanced inputs it applies the
+returned payments and checks that every balance ends at exactly zero, that no payment is zero or
+negative, and that there are never more than `n - 1` payments.
