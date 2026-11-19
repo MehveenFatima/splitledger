@@ -144,4 +144,8 @@ public class Ledger {
     public Money balanceOf(String memberId) {
         return balances().get(member(memberId).id());
     }
+
+    public boolean isSettled() {
+        return balances().values().stream().allMatch(Money::isZero);
+    }
 }
