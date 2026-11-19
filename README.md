@@ -147,3 +147,13 @@ More detail in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
   ledger always produces the same plan (important for tests and for users).
 - **No dependencies.** Even CSV handling is hand-written, so the jar runs anywhere Java 17 runs.
 
+## Running the tests
+
+```bash
+mvn test        # 164 unit tests
+mvn verify      # tests + JaCoCo coverage report in target/site/jacoco/index.html
+```
+
+The settlement algorithm also has randomized property tests: for hundreds of random balanced
+inputs they check that the plan settles everyone and never uses more than `n - 1` payments.
+
