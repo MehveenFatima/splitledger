@@ -74,4 +74,11 @@ class LedgerStoreTest {
         store.save(sampleLedger(), file);
         assertEquals(LedgerStore.HEADER, Files.readAllLines(file).get(0));
     }
+
+    @Test
+    void ignoresCommentsAndBlankLines() throws IOException {
+        Path file = dir.resolve("hand-written.csv");
+        Files.write(file, List.of("# my trip", "", "MEMBER,riya,Riya", "  ", "MEMBER,sam,Sam"));
+        assertEquals(2, store.load(file).members().size());
+    }
 }
