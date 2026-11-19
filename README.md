@@ -163,3 +163,10 @@ GitHub Actions builds the project on every push and pull request (`.github/workf
 it runs all tests, runs the Goa trip demo script as a smoke test and uploads the coverage report.
 Dependabot keeps Maven and Actions versions up to date.
 
+## Roadmap
+
+- [ ] Multiple currencies with conversion rates
+- [ ] Recurring expenses (monthly rent, subscriptions)
+- [ ] Export the report as Markdown or HTML
+- [ ] REST API version with Spring Boot
+
