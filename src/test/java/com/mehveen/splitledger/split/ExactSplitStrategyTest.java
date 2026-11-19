@@ -35,4 +35,10 @@ class ExactSplitStrategyTest {
         assertThrows(ValidationException.class, () -> strategy.split(Money.ofRupees(100),
                 List.of(SplitShare.of("a", "150"), SplitShare.of("b", "-50"))));
     }
+
+    @Test
+    void rejectsFractionsOfPaise() {
+        assertThrows(ValidationException.class, () -> strategy.split(Money.ofRupees(1),
+                List.of(SplitShare.of("a", "0.505"), SplitShare.of("b", "0.495"))));
+    }
 }
