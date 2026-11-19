@@ -37,4 +37,11 @@ class LedgerReportTest {
         String text = report.build(ledger);
         assertTrue(text.contains("Members: 2 | Expenses: 1 | Total spent: Rs 500.00"));
     }
+
+    @Test
+    void emptyLedgerIsSettled() {
+        String text = report.build(ledger);
+        assertTrue(text.contains("Everyone is settled up."));
+        assertFalse(text.contains("By category"));
+    }
 }
