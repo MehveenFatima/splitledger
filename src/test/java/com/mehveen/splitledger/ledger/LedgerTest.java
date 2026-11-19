@@ -64,4 +64,10 @@ class LedgerTest {
         assertThrows(NotFoundException.class, () -> ledger.member("zoe"));
         assertThrows(NotFoundException.class, () -> ledger.member(null));
     }
+
+    @Test
+    void assignsIncreasingExpenseIds() {
+        assertEquals(1, dinner("riya", "300").id());
+        assertEquals(2, dinner("aman", "300").id());
+    }
 }
