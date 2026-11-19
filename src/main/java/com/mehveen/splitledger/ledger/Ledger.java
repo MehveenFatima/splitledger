@@ -148,4 +148,8 @@ public class Ledger {
     public boolean isSettled() {
         return balances().values().stream().allMatch(Money::isZero);
     }
+
+    public Money totalSpent() {
+        return expenses.stream().map(Expense::amount).reduce(Money.ZERO, Money::plus);
+    }
 }
