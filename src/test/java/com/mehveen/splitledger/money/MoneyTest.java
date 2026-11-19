@@ -150,4 +150,10 @@ class MoneyTest {
         assertEquals(Money.parse("5.5").hashCode(), Money.parse("5.50").hashCode());
         assertNotEquals(Money.parse("5.5"), Money.parse("5.51"));
     }
+
+    @Test
+    void toStringIsPlainDecimal() {
+        assertEquals("1200.50", Money.parse("1200.5").toString());
+        assertEquals("-3.00", Money.ofRupees(-3).toString());
+    }
 }
