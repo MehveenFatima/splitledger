@@ -262,4 +262,21 @@ public class Cli {
         out.println("Settle everyone in " + transfers.size() + " payment(s):");
         transfers.forEach(t -> out.println("  " + t));
     }
+
+    private void stats() {
+        if (ledger.expenses().isEmpty()) {
+            out.println("No expenses yet.");
+            return;
+        }
+        Money total = ledger.totalSpent();
+        out.println("Total spent: " + total.format());
+        out.println("Average per member: "
+                + total.allocate(Math.max(1, ledger.members().size())).get(0).format());
+        ledger.members().stream()
+                .max(Comparator.comparing((Member m) -> ledger.spendingOf(m.id())).thenComparing(Member::id))
+                .ifPresent(m -> out.println("Top spender: " + m.id() + " (" + ledger.spendingOf(m.id()).format() + ")"));
+        ledger.expenses().stream()
+                .max(Comparator.comparing(Expense::amount))
+                .ifPresent(e -> out.println("Biggest expense: " + e));
+    }
 }
