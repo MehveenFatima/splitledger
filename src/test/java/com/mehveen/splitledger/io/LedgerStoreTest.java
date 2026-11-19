@@ -81,4 +81,12 @@ class LedgerStoreTest {
         Files.write(file, List.of("# my trip", "", "MEMBER,riya,Riya", "  ", "MEMBER,sam,Sam"));
         assertEquals(2, store.load(file).members().size());
     }
+
+    @Test
+    void reportsLineNumberOnError() throws IOException {
+        Path file = dir.resolve("bad.csv");
+        Files.write(file, List.of("MEMBER,riya,Riya", "ALIEN,1,2"));
+        LedgerException e = assertThrows(LedgerException.class, () -> store.load(file));
+        assertTrue(e.getMessage().startsWith("Line 2"));
+    }
 }
