@@ -142,4 +142,28 @@ public class Cli {
             out.printf("%-12s %-20s %12s%n", member.id(), member.name(), balances.get(member.id()).format());
         }
     }
+
+    private void expense(String sub, ParsedCommand command) {
+        switch (sub) {
+            case "add" -> addExpense(command);
+            case "remove" -> {
+                Expense removed = ledger.removeExpense(parseId(command.word(2)));
+                out.println("Removed expense " + removed);
+            }
+            default -> throw new ValidationException("Use 'expense add ...' or 'expense remove <id>'");
+        }
+    }
+
+    private void addExpense(ParsedCommand command) {
+        String description = command.word(2);
+        Money amount = Money.parse(command.word(3));
+        String payer = command.requireOption("payer");
+        SplitType type = SplitType.fromString(command.option("split").orElse("equal"));
+        List<SplitShare> shares = parseShares(command.option("with").orElse(""), type);
+        Category category = Category.fromString(command.option("category").orElse("other"));
+        LocalDate date = command.option("date").map(Cli::parseDate).orElse(LocalDate.now(clock));
+        Expense expense = ledger.addExpense(description, payer, amount, category, type, shares, date);
+        out.println("Added expense " + expense);
+        expense.shares().forEach((id, share) -> out.println("  " + id + " owes " + share.format()));
+    }
 }
