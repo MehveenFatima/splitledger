@@ -66,4 +66,11 @@ class DebtSimplifierTest {
                 new Transfer("c", "b", Money.ofRupees(300)),
                 new Transfer("c", "a", Money.ofRupees(100))), transfers);
     }
+
+    @Test
+    void chainCollapses() {
+        // a owes b 100 and b owes c 100 -> net: a -100, b 0, c +100 -> a pays c directly
+        List<Transfer> transfers = simplifier.simplify(balances("a", -100, "b", 0, "c", 100));
+        assertEquals(List.of(new Transfer("a", "c", Money.ofRupees(100))), transfers);
+    }
 }
