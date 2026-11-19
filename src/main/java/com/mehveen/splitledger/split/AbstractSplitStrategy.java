@@ -42,4 +42,11 @@ public abstract class AbstractSplitStrategy implements SplitStrategy {
             }
         }
     }
+
+    private static void verifyTotal(Money total, Map<String, Money> parts) {
+        Money sum = parts.values().stream().reduce(Money.ZERO, Money::plus);
+        if (!sum.equals(total)) {
+            throw new IllegalStateException("Split parts add up to " + sum + " instead of " + total);
+        }
+    }
 }
