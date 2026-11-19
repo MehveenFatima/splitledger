@@ -22,4 +22,9 @@ class CommandParserTest {
         assertEquals(List.of("expense", "add", "Dinner at Paradise", "1200"),
                 CommandParser.tokenize("expense add \"Dinner at Paradise\" 1200"));
     }
+
+    @Test
+    void emptyQuotesGiveEmptyWord() {
+        assertEquals(List.of("a", "", "b"), CommandParser.tokenize("a \"\" b"));
+    }
 }
