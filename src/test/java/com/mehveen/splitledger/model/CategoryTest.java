@@ -14,4 +14,10 @@ class CategoryTest {
         assertEquals(Category.FOOD, Category.fromString("Food"));
         assertEquals(Category.TRAVEL, Category.fromString(" travel "));
     }
+
+    @Test
+    void blankDefaultsToOther() {
+        assertEquals(Category.OTHER, Category.fromString(""));
+        assertEquals(Category.OTHER, Category.fromString(null));
+    }
 }
