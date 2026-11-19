@@ -143,4 +143,11 @@ class MoneyTest {
         assertTrue(Money.ofRupees(2).compareTo(Money.ofRupees(1)) > 0);
         assertEquals(0, Money.ofRupees(2).compareTo(Money.parse("2.00")));
     }
+
+    @Test
+    void equalityIsValueBased() {
+        assertEquals(Money.parse("5.5"), Money.parse("5.50"));
+        assertEquals(Money.parse("5.5").hashCode(), Money.parse("5.50").hashCode());
+        assertNotEquals(Money.parse("5.5"), Money.parse("5.51"));
+    }
 }
