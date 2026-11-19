@@ -120,4 +120,13 @@ class MoneyTest {
     void allocateRejectsNegativeAmount() {
         assertThrows(IllegalArgumentException.class, () -> Money.ofRupees(-1).allocate(2));
     }
+
+    @Test
+    void allocateRejectsInvalidWeights() {
+        Money ten = Money.ofRupees(10);
+        assertThrows(IllegalArgumentException.class, () -> ten.allocate(List.of()));
+        assertThrows(IllegalArgumentException.class, () -> ten.allocate(List.of(BigDecimal.ZERO)));
+        assertThrows(IllegalArgumentException.class, () -> ten.allocate(List.of(new BigDecimal("-1"))));
+        assertThrows(IllegalArgumentException.class, () -> ten.allocate(0));
+    }
 }
