@@ -160,4 +160,10 @@ public class Ledger {
         }
         return Collections.unmodifiableMap(totals);
     }
+
+    /** How much of the group's spending was consumed by this member (sum of their shares). */
+    public Money spendingOf(String memberId) {
+        String id = member(memberId).id();
+        return expenses.stream().map(e -> e.shareOf(id)).reduce(Money.ZERO, Money::plus);
+    }
 }
