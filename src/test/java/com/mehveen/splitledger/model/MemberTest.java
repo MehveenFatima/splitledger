@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class MemberTest {
 
@@ -48,5 +49,11 @@ class MemberTest {
     @Test
     void ofTruncatesLongNames() {
         assertEquals(20, Member.of("b".repeat(30)).id().length());
+    }
+
+    @Test
+    void ofExplainsHowToChooseIdForSymbolOnlyNames() {
+        ValidationException e = assertThrows(ValidationException.class, () -> Member.of("!!!"));
+        assertTrue(e.getMessage().contains("--id"));
     }
 }
