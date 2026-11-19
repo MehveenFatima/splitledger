@@ -32,4 +32,28 @@ import java.util.Map;
 public class LedgerStore {
 
     static final String HEADER = "# SplitLedger v1";
+
+    public void save(Ledger ledger, Path file) {
+        List<String> lines = new ArrayList<>();
+        lines.add(HEADER);
+        for (Member member : ledger.members()) {
+            lines.add(CsvCodec.encode(List.of("MEMBER", member.id(), member.name())));
+        }
+        for (Expense expense : ledger.expenses()) {
+            lines.add(encodeExpense(expense));
+        }
+        for (Payment payment : ledger.payments()) {
+            lines.add(CsvCodec.encode(List.of("PAYMENT", payment.date().toString(),
+                    payment.fromId(), payment.toId(), payment.amount().toString())));
+        }
+        try {
+            Path parent = file.toAbsolutePath().getParent();
+            if (parent != null) {
+                Files.createDirectories(parent);
+            }
+            Files.write(file, lines, StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            throw new UncheckedIOException("Could not save ledger to " + file, e);
+        }
+    }
 }
