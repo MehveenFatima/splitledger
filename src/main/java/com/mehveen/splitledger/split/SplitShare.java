@@ -17,4 +17,12 @@ public record SplitShare(String memberId, BigDecimal value) {
         memberId = memberId.trim().toLowerCase(java.util.Locale.ROOT);
         value = value == null ? BigDecimal.ZERO : value;
     }
+
+    public static SplitShare of(String memberId) {
+        return new SplitShare(memberId, BigDecimal.ZERO);
+    }
+
+    public static SplitShare of(String memberId, String value) {
+        return new SplitShare(memberId, new BigDecimal(value));
+    }
 }
