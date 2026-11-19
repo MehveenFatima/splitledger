@@ -27,4 +27,14 @@ public class DebtSimplifier {
     /** Largest amount first; ties broken by member id so results are deterministic. */
     private static final Comparator<Position> LARGEST_FIRST =
             Comparator.comparingLong(Position::paise).reversed().thenComparing(Position::memberId);
+
+    private static void requireBalanced(Map<String, Money> balances) {
+        long sum = 0;
+        for (Money balance : balances.values()) {
+            sum = Math.addExact(sum, balance.paise());
+        }
+        if (sum != 0) {
+            throw new IllegalArgumentException("Balances must add up to zero but add up to " + Money.ofPaise(sum));
+        }
+    }
 }
