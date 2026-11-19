@@ -92,4 +92,25 @@ public class Cli {
         }
         return true;
     }
+
+    private void printHelp() {
+        out.println("""
+                Commands:
+                  member add <name> [--id <handle>]       add a person to the group
+                  member remove <id>                      remove a person with no history
+                  members                                 list members and balances
+                  expense add <description> <amount> --payer <id>
+                        [--with a,b,c | a:300,b:200] [--split equal|exact|percent|shares]
+                        [--category food|travel|rent|utilities|shopping|entertainment|other]
+                        [--date YYYY-MM-DD]               record an expense
+                  expense remove <id>                     delete an expense
+                  expenses [--member id] [--category c] [--from date] [--to date]
+                  pay <from> <to> <amount> [--date d]     record a settle-up payment
+                  balances                                who owes and who is owed
+                  settle                                  fewest payments to settle everyone
+                  report                                  full summary
+                  stats                                   quick spending statistics
+                  save <file> / load <file>               store or restore the ledger
+                  exit                                    quit""");
+    }
 }
