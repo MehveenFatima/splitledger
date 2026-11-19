@@ -50,4 +50,12 @@ class DebtSimplifierTest {
         List<Transfer> transfers = simplifier.simplify(balances("a", 500, "b", -500));
         assertEquals(List.of(new Transfer("b", "a", Money.ofRupees(500))), transfers);
     }
+
+    @Test
+    void oneCreditorManyDebtors() {
+        List<Transfer> transfers = simplifier.simplify(balances("a", 600, "b", -200, "c", -400));
+        assertEquals(2, transfers.size());
+        assertEquals(new Transfer("c", "a", Money.ofRupees(400)), transfers.get(0));
+        assertEquals(new Transfer("b", "a", Money.ofRupees(200)), transfers.get(1));
+    }
 }
