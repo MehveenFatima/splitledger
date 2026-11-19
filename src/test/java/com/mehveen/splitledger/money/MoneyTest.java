@@ -61,4 +61,12 @@ class MoneyTest {
     void parseTrimsWhitespace() {
         assertEquals(Money.ofRupees(5), Money.parse("  5.00 "));
     }
+
+    @Test
+    void plusAndMinus() {
+        Money a = Money.parse("10.25");
+        Money b = Money.parse("2.75");
+        assertEquals(Money.parse("13.00"), a.plus(b));
+        assertEquals(Money.parse("7.50"), a.minus(b));
+    }
 }
