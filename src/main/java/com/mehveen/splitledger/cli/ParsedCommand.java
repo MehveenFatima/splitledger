@@ -17,4 +17,19 @@ public record ParsedCommand(List<String> words, Map<String, String> options) {
         words = List.copyOf(words);
         options = Map.copyOf(options);
     }
+
+    public boolean isEmpty() {
+        return words.isEmpty();
+    }
+
+    public String word(int index) {
+        if (index >= words.size()) {
+            throw new ValidationException("Missing argument #" + (index + 1) + ". Type 'help' for usage");
+        }
+        return words.get(index);
+    }
+
+    public Optional<String> optionalWord(int index) {
+        return index < words.size() ? Optional.of(words.get(index)) : Optional.empty();
+    }
 }
