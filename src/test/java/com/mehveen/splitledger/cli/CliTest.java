@@ -164,4 +164,15 @@ class CliTest {
         assertTrue(out.contains("Total spent: Rs 30000.00"));
         assertTrue(out.contains("Top spender: riya"));
     }
+
+    @Test
+    void saveAndLoad() throws IOException {
+        addGroup();
+        run("expense add Dinner 900 --payer riya");
+        Path file = Files.createTempDirectory("cli-test").resolve("trip.csv");
+        run("save " + file);
+        run("member add Zoe");
+        assertTrue(run("load " + file).contains("Loaded 3 members and 1 expenses"));
+        assertFalse(cli.ledger().hasMember("zoe"));
+    }
 }
