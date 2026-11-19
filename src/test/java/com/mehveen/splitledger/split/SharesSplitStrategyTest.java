@@ -36,4 +36,12 @@ class SharesSplitStrategyTest {
         assertThrows(ValidationException.class, () -> strategy.split(Money.ofRupees(100),
                 List.of(SplitShare.of("a", "1"), SplitShare.of("b", "0"))));
     }
+
+    @Test
+    void unevenRatiosAddUp() {
+        Money total = Money.ofRupees(100);
+        Map<String, Money> result = strategy.split(total,
+                List.of(SplitShare.of("a", "1"), SplitShare.of("b", "1"), SplitShare.of("c", "1")));
+        assertEquals(total, result.values().stream().reduce(Money.ZERO, Money::plus));
+    }
 }
