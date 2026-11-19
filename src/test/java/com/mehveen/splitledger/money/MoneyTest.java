@@ -108,4 +108,11 @@ class MoneyTest {
         Money sum = parts.stream().reduce(Money.ZERO, Money::plus);
         assertEquals(total, sum);
     }
+
+    @Test
+    void allocateGivesLeftoverToLargestRemainder() {
+        // 10 paise in ratio 1:2 -> exact 3.33 and 6.67 -> 3 and 7
+        List<Money> parts = Money.ofPaise(10).allocate(List.of(BigDecimal.ONE, new BigDecimal("2")));
+        assertEquals(List.of(Money.ofPaise(3), Money.ofPaise(7)), parts);
+    }
 }
