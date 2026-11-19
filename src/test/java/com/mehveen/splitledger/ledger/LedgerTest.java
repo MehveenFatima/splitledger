@@ -147,4 +147,14 @@ class LedgerTest {
         assertEquals(Money.ofRupees(100), ledger.spendingOf("riya"));
         assertEquals(Money.ofRupees(160), ledger.spendingOf("sam"));
     }
+
+    @Test
+    void expensesInvolvingMember() {
+        ledger.addExpense("Gift", "riya", Money.ofRupees(50), Category.SHOPPING, SplitType.EQUAL,
+                List.of(SplitShare.of("aman")), NOV_19);
+        ledger.addExpense("Cab", "aman", Money.ofRupees(60), Category.TRAVEL, SplitType.EQUAL,
+                List.of(SplitShare.of("aman"), SplitShare.of("sam")), NOV_19);
+        assertEquals(1, ledger.expensesInvolving("riya").size());
+        assertEquals(2, ledger.expensesInvolving("aman").size());
+    }
 }
