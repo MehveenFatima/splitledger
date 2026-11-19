@@ -80,4 +80,10 @@ class ExpenseTest {
         assertTrue(e.involves("sam"));
         assertFalse(e.involves("aman"));
     }
+
+    @Test
+    void sharesAreReadOnly() {
+        Expense e = new Expense(1, "Cab", "riya", Money.ofRupees(10), null, null, shares("riya", "10"), DAY);
+        assertThrows(UnsupportedOperationException.class, () -> e.shares().put("x", Money.ZERO));
+    }
 }
