@@ -115,4 +115,9 @@ class MoneyTest {
         List<Money> parts = Money.ofPaise(10).allocate(List.of(BigDecimal.ONE, new BigDecimal("2")));
         assertEquals(List.of(Money.ofPaise(3), Money.ofPaise(7)), parts);
     }
+
+    @Test
+    void allocateRejectsNegativeAmount() {
+        assertThrows(IllegalArgumentException.class, () -> Money.ofRupees(-1).allocate(2));
+    }
 }
