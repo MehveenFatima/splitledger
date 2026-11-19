@@ -177,6 +177,17 @@ class CliTest {
     }
 
     @Test
+    void exportWritesMarkdownFile() throws IOException {
+        addGroup();
+        run("expense add Dinner 900 --payer riya");
+        Path file = Files.createTempDirectory("cli-export").resolve("summary.md");
+        assertTrue(run("export " + file + " --title \"Goa trip\"").contains("Exported Markdown summary"));
+        String md = Files.readString(file);
+        assertTrue(md.startsWith("# Goa trip"));
+        assertTrue(md.contains("- [ ] aman pays riya Rs 300.00"));
+    }
+
+    @Test
     void unknownCommandPointsToHelp() {
         assertTrue(run("dance").contains("Type 'help'"));
     }

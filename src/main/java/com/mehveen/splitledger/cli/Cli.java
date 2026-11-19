@@ -10,14 +10,18 @@ import com.mehveen.splitledger.model.Member;
 import com.mehveen.splitledger.model.Payment;
 import com.mehveen.splitledger.money.Money;
 import com.mehveen.splitledger.report.LedgerReport;
+import com.mehveen.splitledger.report.MarkdownReport;
 import com.mehveen.splitledger.settle.DebtSimplifier;
 import com.mehveen.splitledger.settle.Transfer;
 import com.mehveen.splitledger.split.SplitShare;
 import com.mehveen.splitledger.split.SplitType;
 
 import java.io.PrintStream;
+import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Clock;
 import java.time.LocalDate;
@@ -83,6 +87,7 @@ public class Cli {
             case "report" -> out.print(new LedgerReport(simplifier).build(ledger));
             case "stats" -> stats();
             case "save" -> save(command);
+            case "export" -> export(command);
             case "load" -> load(command);
             case "exit", "quit" -> {
                 out.println("Bye!");
@@ -111,6 +116,7 @@ public class Cli {
                   report                                  full summary
                   stats                                   quick spending statistics
                   save <file> / load <file>               store or restore the ledger
+                  export <file.md> [--title t]            write a Markdown summary to share
                   exit                                    quit""");
     }
 
@@ -284,6 +290,21 @@ public class Cli {
         Path file = Path.of(command.word(1));
         store.save(ledger, file);
         out.println("Saved to " + file);
+    }
+
+    private void export(ParsedCommand command) {
+        Path file = Path.of(command.word(1));
+        String title = command.option("title").orElse("SplitLedger summary");
+        try {
+            Path parent = file.toAbsolutePath().getParent();
+            if (parent != null) {
+                Files.createDirectories(parent);
+            }
+            Files.writeString(file, new MarkdownReport(simplifier).build(ledger, title), StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            throw new UncheckedIOException("Could not write " + file, e);
+        }
+        out.println("Exported Markdown summary to " + file);
     }
 
     private void load(ParsedCommand command) {
