@@ -144,4 +144,8 @@ public final class Money implements Comparable<Money> {
         }
         return allocate(Collections.nCopies(parts, BigDecimal.ONE));
     }
+
+    public BigDecimal toRupees() {
+        return BigDecimal.valueOf(paise, 2);
+    }
 }
