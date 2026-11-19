@@ -105,4 +105,12 @@ class CliTest {
         assertTrue(run("expense add Rent 300 --payer sam --split exact --with riya").startsWith("Error:"));
         assertTrue(run("expense add Rent 300 --payer sam --split exact --with riya:abc").contains("Not a number"));
     }
+
+    @Test
+    void expenseRemove() {
+        addGroup();
+        run("expense add Dinner 900 --payer riya");
+        assertTrue(run("expense remove #1").contains("Removed expense #1"));
+        assertTrue(cli.ledger().expenses().isEmpty());
+    }
 }
