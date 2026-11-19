@@ -22,4 +22,13 @@ class PercentSplitStrategyTest {
         assertEquals(Money.ofRupees(600), result.get("b"));
         assertEquals(Money.ofRupees(400), result.get("c"));
     }
+
+    @Test
+    void supportsDecimalPercentages() {
+        Map<String, Money> result = strategy.split(Money.ofRupees(100),
+                List.of(SplitShare.of("a", "33.33"), SplitShare.of("b", "33.33"), SplitShare.of("c", "33.34")));
+        Money sum = result.values().stream().reduce(Money.ZERO, Money::plus);
+        assertEquals(Money.ofRupees(100), sum);
+        assertEquals(Money.parse("33.34"), result.get("c"));
+    }
 }
