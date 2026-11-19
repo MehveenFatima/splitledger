@@ -39,4 +39,10 @@ class PercentSplitStrategyTest {
         assertThrows(ValidationException.class, () -> strategy.split(Money.ofRupees(100),
                 List.of(SplitShare.of("a", "60"), SplitShare.of("b", "50"))));
     }
+
+    @Test
+    void rejectsZeroPercent() {
+        assertThrows(ValidationException.class, () -> strategy.split(Money.ofRupees(100),
+                List.of(SplitShare.of("a", "100"), SplitShare.of("b", "0"))));
+    }
 }
