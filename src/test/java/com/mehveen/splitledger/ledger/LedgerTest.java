@@ -51,4 +51,11 @@ class LedgerTest {
     void rejectsDuplicateMember() {
         assertThrows(ValidationException.class, () -> ledger.addMember(new Member("RIYA", "Another Riya")));
     }
+
+    @Test
+    void memberLookupIgnoresCase() {
+        assertEquals("Aman", ledger.member(" AMAN ").name());
+        assertTrue(ledger.hasMember("Sam"));
+        assertFalse(ledger.hasMember("zoe"));
+    }
 }
