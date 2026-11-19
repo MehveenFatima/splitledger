@@ -84,4 +84,16 @@ public class Ledger {
         expenses.add(expense);
         return expense;
     }
+
+    /** Adds an already computed expense, e.g. when loading from disk. */
+    public Expense restoreExpense(Expense expense) {
+        member(expense.payerId());
+        expense.shares().keySet().forEach(this::member);
+        if (findExpense(expense.id()).isPresent()) {
+            throw new ValidationException("Duplicate expense id #" + expense.id());
+        }
+        expenses.add(expense);
+        nextExpenseId = Math.max(nextExpenseId, expense.id() + 1);
+        return expense;
+    }
 }
