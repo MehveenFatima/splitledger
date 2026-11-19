@@ -20,4 +20,11 @@ class CategoryTest {
         assertEquals(Category.OTHER, Category.fromString(""));
         assertEquals(Category.OTHER, Category.fromString(null));
     }
+
+    @Test
+    void unknownCategoryListsOptions() {
+        ValidationException e = assertThrows(ValidationException.class, () -> Category.fromString("pets"));
+        assertTrue(e.getMessage().contains("food"));
+        assertTrue(e.getMessage().contains("rent"));
+    }
 }
