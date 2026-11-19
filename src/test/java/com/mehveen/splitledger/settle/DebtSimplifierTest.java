@@ -127,4 +127,10 @@ class DebtSimplifierTest {
         balances.put("m" + (n - 1), Money.ofPaise(-sum));
         return balances;
     }
+
+    @Test
+    void totalMovedAddsAmounts() {
+        List<Transfer> transfers = simplifier.simplify(balances("a", 100, "b", 300, "c", -400));
+        assertEquals(Money.ofRupees(400), DebtSimplifier.totalMoved(transfers));
+    }
 }
