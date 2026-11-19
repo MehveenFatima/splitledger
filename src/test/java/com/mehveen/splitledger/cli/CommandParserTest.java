@@ -40,4 +40,9 @@ class CommandParserTest {
         assertEquals("riya", command.requireOption("payer"));
         assertEquals("riya,sam", command.option("with").orElseThrow());
     }
+
+    @Test
+    void optionNamesAreLowercased() {
+        assertEquals("food", CommandParser.parse("expenses --CATEGORY food").requireOption("category"));
+    }
 }
