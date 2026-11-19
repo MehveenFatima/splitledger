@@ -122,4 +122,13 @@ class CliTest {
         assertTrue(out.contains("riya is owed Rs 600.00"));
         assertTrue(out.contains("aman owes Rs 300.00"));
     }
+
+    @Test
+    void settleShowsPayments() {
+        addGroup();
+        run("expense add Dinner 900 --payer riya");
+        String out = run("settle");
+        assertTrue(out.contains("2 payment(s)"));
+        assertTrue(out.contains("aman pays riya Rs 300.00"));
+    }
 }
