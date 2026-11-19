@@ -11,4 +11,15 @@ public final class CsvCodec {
 
     private CsvCodec() {
     }
+
+    public static String encode(List<String> fields) {
+        StringBuilder line = new StringBuilder();
+        for (int i = 0; i < fields.size(); i++) {
+            if (i > 0) {
+                line.append(',');
+            }
+            line.append(escape(fields.get(i)));
+        }
+        return line.toString();
+    }
 }
