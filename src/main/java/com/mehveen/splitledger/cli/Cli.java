@@ -53,4 +53,43 @@ public class Cli {
     public Ledger ledger() {
         return ledger;
     }
+
+    /** Runs one command line. Returns {@code false} when the user asked to exit. */
+    public boolean execute(String line) {
+        try {
+            ParsedCommand command = CommandParser.parse(line);
+            if (command.isEmpty()) {
+                return true;
+            }
+            return dispatch(command);
+        } catch (LedgerException | IllegalArgumentException | UncheckedIOException e) {
+            out.println("Error: " + e.getMessage());
+            return true;
+        }
+    }
+
+    private boolean dispatch(ParsedCommand command) {
+        String name = command.word(0).toLowerCase();
+        String sub = command.optionalWord(1).map(String::toLowerCase).orElse("");
+        switch (name) {
+            case "help" -> printHelp();
+            case "member" -> member(sub, command);
+            case "members" -> listMembers();
+            case "expense" -> expense(sub, command);
+            case "expenses" -> listExpenses(command);
+            case "pay" -> pay(command);
+            case "balances" -> balances();
+            case "settle" -> settle();
+            case "report" -> out.print(new LedgerReport(simplifier).build(ledger));
+            case "stats" -> stats();
+            case "save" -> save(command);
+            case "load" -> load(command);
+            case "exit", "quit" -> {
+                out.println("Bye!");
+                return false;
+            }
+            default -> out.println("Unknown command '" + name + "'. Type 'help' to see all commands.");
+        }
+        return true;
+    }
 }
