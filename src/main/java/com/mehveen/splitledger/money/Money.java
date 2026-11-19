@@ -58,4 +58,12 @@ public final class Money implements Comparable<Money> {
     public Money minus(Money other) {
         return ofPaise(Math.subtractExact(paise, other.paise));
     }
+
+    public Money negate() {
+        return ofPaise(Math.negateExact(paise));
+    }
+
+    public Money abs() {
+        return paise < 0 ? negate() : this;
+    }
 }
