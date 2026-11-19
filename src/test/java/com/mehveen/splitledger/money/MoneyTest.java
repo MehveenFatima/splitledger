@@ -94,4 +94,10 @@ class MoneyTest {
         assertSame(small, Money.min(small, big));
         assertSame(small, Money.min(big, small));
     }
+
+    @Test
+    void allocateEquallyDistributesRemainder() {
+        List<Money> parts = Money.ofRupees(100).allocate(3);
+        assertEquals(List.of(Money.parse("33.34"), Money.parse("33.33"), Money.parse("33.33")), parts);
+    }
 }
