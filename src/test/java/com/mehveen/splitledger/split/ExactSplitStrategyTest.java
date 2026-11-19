@@ -41,4 +41,11 @@ class ExactSplitStrategyTest {
         assertThrows(ValidationException.class, () -> strategy.split(Money.ofRupees(1),
                 List.of(SplitShare.of("a", "0.505"), SplitShare.of("b", "0.495"))));
     }
+
+    @Test
+    void allowsZeroForSomeone() {
+        Map<String, Money> result = strategy.split(Money.ofRupees(50),
+                List.of(SplitShare.of("a", "50"), SplitShare.of("b", "0")));
+        assertEquals(Money.ZERO, result.get("b"));
+    }
 }
