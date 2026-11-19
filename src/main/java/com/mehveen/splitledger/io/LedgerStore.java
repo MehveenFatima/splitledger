@@ -122,4 +122,18 @@ public class LedgerStore {
                 Money.parse(fields.get(4)), Category.fromString(fields.get(5)),
                 SplitType.fromString(fields.get(6)), shares, date(fields.get(2)));
     }
+
+    private static void requireFields(List<String> fields, int count) {
+        if (fields.size() != count) {
+            throw new IllegalArgumentException("Expected " + count + " fields but found " + fields.size());
+        }
+    }
+
+    private static LocalDate date(String text) {
+        try {
+            return LocalDate.parse(text);
+        } catch (DateTimeParseException e) {
+            throw new IllegalArgumentException("Invalid date '" + text + "', expected YYYY-MM-DD");
+        }
+    }
 }
