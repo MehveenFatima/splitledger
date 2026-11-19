@@ -1,0 +1,7 @@
+# SplitLedger v1
+MEMBER,riya,Riya Sharma
+MEMBER,aman,Aman Verma
+MEMBER,sam,Sam Khan
+EXPENSE,1,2026-11-14,aman,18000.00,travel,equal,Flight tickets,riya=6000.00;aman=6000.00;sam=6000.00
+EXPENSE,2,2026-11-15,riya,2450.00,food,equal,Beach shack dinner,riya=816.67;aman=816.67;sam=816.66
+PAYMENT,2026-11-17,sam,aman,2000.00
