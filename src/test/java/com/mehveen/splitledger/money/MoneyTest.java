@@ -23,4 +23,9 @@ class MoneyTest {
     void ofRupeesConvertsToPaise() {
         assertEquals(12_500L, Money.ofRupees(125).paise());
     }
+
+    @Test
+    void ofRupeesRejectsOverflow() {
+        assertThrows(ArithmeticException.class, () -> Money.ofRupees(Long.MAX_VALUE));
+    }
 }
