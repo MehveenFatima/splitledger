@@ -44,4 +44,13 @@ public class Ledger {
     public Ledger(SplitStrategyFactory strategies) {
         this.strategies = Objects.requireNonNull(strategies, "strategies");
     }
+
+    public Member addMember(Member member) {
+        Objects.requireNonNull(member, "member");
+        if (members.containsKey(member.id())) {
+            throw new ValidationException("A member with id '" + member.id() + "' already exists");
+        }
+        members.put(member.id(), member);
+        return member;
+    }
 }
