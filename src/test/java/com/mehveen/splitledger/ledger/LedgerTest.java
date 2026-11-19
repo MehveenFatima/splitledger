@@ -105,4 +105,13 @@ class LedgerTest {
         assertEquals(Money.ZERO, ledger.balanceOf("aman"));
         assertEquals(Money.ofRupees(300), ledger.balanceOf("riya"));
     }
+
+    @Test
+    void settledAfterAllPayments() {
+        dinner("riya", "900");
+        ledger.recordPayment("aman", "riya", Money.ofRupees(300), NOV_19);
+        assertFalse(ledger.isSettled());
+        ledger.recordPayment("sam", "riya", Money.ofRupees(300), NOV_19);
+        assertTrue(ledger.isSettled());
+    }
 }
