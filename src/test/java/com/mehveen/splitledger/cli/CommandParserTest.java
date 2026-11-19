@@ -58,4 +58,10 @@ class CommandParserTest {
         assertTrue(CommandParser.parse(null).isEmpty());
         assertFalse(CommandParser.parse("help").isEmpty());
     }
+
+    @Test
+    void missingWordHasHelpfulMessage() {
+        ValidationException e = assertThrows(ValidationException.class, () -> CommandParser.parse("pay").word(1));
+        assertTrue(e.getMessage().contains("help"));
+    }
 }
