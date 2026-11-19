@@ -37,4 +37,9 @@ class EqualSplitStrategyTest {
                 List.of(SplitShare.of("zed"), SplitShare.of("amy")));
         assertEquals(List.of("zed", "amy"), List.copyOf(result.keySet()));
     }
+
+    @Test
+    void singleParticipantPaysAll() {
+        assertEquals(Money.ofRupees(55), strategy.split(Money.ofRupees(55), List.of(SplitShare.of("a"))).get("a"));
+    }
 }
