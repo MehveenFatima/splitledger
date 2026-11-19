@@ -193,4 +193,28 @@ public class Cli {
         }
         return shares;
     }
+
+    private static BigDecimal parseDecimal(String text) {
+        try {
+            return new BigDecimal(text.trim());
+        } catch (NumberFormatException e) {
+            throw new ValidationException("Not a number: " + text);
+        }
+    }
+
+    private static int parseId(String text) {
+        try {
+            return Integer.parseInt(text.replace("#", "").trim());
+        } catch (NumberFormatException e) {
+            throw new ValidationException("Not an expense id: " + text);
+        }
+    }
+
+    private static LocalDate parseDate(String text) {
+        try {
+            return LocalDate.parse(text);
+        } catch (DateTimeParseException e) {
+            throw new ValidationException("Invalid date '" + text + "', expected YYYY-MM-DD");
+        }
+    }
 }
