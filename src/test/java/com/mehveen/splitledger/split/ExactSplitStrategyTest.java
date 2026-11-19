@@ -29,4 +29,10 @@ class ExactSplitStrategyTest {
                 List.of(SplitShare.of("a", "600"), SplitShare.of("b", "300"))));
         assertTrue(e.getMessage().contains("Rs 900.00"));
     }
+
+    @Test
+    void rejectsNegativeAmount() {
+        assertThrows(ValidationException.class, () -> strategy.split(Money.ofRupees(100),
+                List.of(SplitShare.of("a", "150"), SplitShare.of("b", "-50"))));
+    }
 }
