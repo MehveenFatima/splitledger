@@ -116,3 +116,21 @@ Each step fully settles at least one person, so there are at most `n - 1` paymen
 algorithm runs in **O(n log n)** time. See [docs/ALGORITHM.md](docs/ALGORITHM.md) for a worked
 example and the proof sketch.
 
+## Project structure
+
+```text
+src/main/java/com/mehveen/splitledger
+├── App.java              entry point (interactive and --script modes)
+├── cli/                  command parsing and the command interpreter
+├── exception/            LedgerException, ValidationException, NotFoundException
+├── io/                   CSV codec and LedgerStore (save / load)
+├── ledger/               Ledger: members, expenses, payments, balances, filters
+├── model/                Member, Expense, Payment, Category
+├── money/                Money value type (paise-exact arithmetic and allocation)
+├── report/               plain-text report builder
+├── settle/               DebtSimplifier (two-heap algorithm) and Transfer
+└── split/                SplitStrategy + equal / exact / percent / shares strategies
+```
+
+More detail in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+
