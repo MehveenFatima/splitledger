@@ -22,4 +22,12 @@ class EqualSplitStrategyTest {
         assertEquals(Money.ofRupees(300), result.get("b"));
         assertEquals(Money.ofRupees(300), result.get("c"));
     }
+
+    @Test
+    void distributesLeftoverPaise() {
+        Map<String, Money> result = strategy.split(Money.ofRupees(100),
+                List.of(SplitShare.of("a"), SplitShare.of("b"), SplitShare.of("c")));
+        assertEquals(Money.parse("33.34"), result.get("a"));
+        assertEquals(Money.parse("33.33"), result.get("c"));
+    }
 }
