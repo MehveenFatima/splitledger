@@ -1,0 +1,19 @@
+# Build output
+target/
+out/
+*.class
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Local ledgers created while trying the app
+*.ledger.csv
