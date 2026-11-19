@@ -167,4 +167,11 @@ class LedgerTest {
         assertEquals(1, ledger.expensesBetween(null, LocalDate.of(2026, 11, 10), null).size());
         assertEquals(2, ledger.expensesBetween(NOV_1, NOV_19, null).size());
     }
+
+    @Test
+    void filtersByCategory() {
+        dinner("riya", "300");
+        assertEquals(1, ledger.expensesBetween(null, null, Category.FOOD).size());
+        assertTrue(ledger.expensesBetween(null, null, Category.RENT).isEmpty());
+    }
 }
