@@ -156,4 +156,10 @@ class MoneyTest {
         assertEquals("1200.50", Money.parse("1200.5").toString());
         assertEquals("-3.00", Money.ofRupees(-3).toString());
     }
+
+    @Test
+    void formatAddsCurrencyAndSign() {
+        assertEquals("Rs 99.90", Money.parse("99.9").format());
+        assertEquals("-Rs 5.00", Money.ofRupees(-5).format());
+    }
 }
