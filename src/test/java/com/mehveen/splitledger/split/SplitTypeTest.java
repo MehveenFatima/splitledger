@@ -28,4 +28,12 @@ class SplitTypeTest {
     void rejectsUnknownType() {
         assertThrows(ValidationException.class, () -> SplitType.fromString("random"));
     }
+
+    @Test
+    void onlyEqualNeedsNoValues() {
+        assertFalse(SplitType.EQUAL.needsValues());
+        assertTrue(SplitType.EXACT.needsValues());
+        assertTrue(SplitType.PERCENT.needsValues());
+        assertTrue(SplitType.SHARES.needsValues());
+    }
 }
