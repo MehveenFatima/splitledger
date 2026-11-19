@@ -43,4 +43,14 @@ public final class Expense {
         this.date = Objects.requireNonNull(date, "date");
         validateShares();
     }
+
+    private void validateShares() {
+        if (shares.isEmpty()) {
+            throw new ValidationException("An expense needs at least one participant");
+        }
+        Money sum = shares.values().stream().reduce(Money.ZERO, Money::plus);
+        if (!sum.equals(amount)) {
+            throw new ValidationException("Shares add up to " + sum.format() + " but amount is " + amount.format());
+        }
+    }
 }
