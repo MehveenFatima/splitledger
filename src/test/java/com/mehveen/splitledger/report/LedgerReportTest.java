@@ -44,4 +44,11 @@ class LedgerReportTest {
         assertTrue(text.contains("Everyone is settled up."));
         assertFalse(text.contains("By category"));
     }
+
+    @Test
+    void listsSettlement() {
+        ledger.addExpense("Dinner", "riya", Money.ofRupees(500), Category.FOOD, SplitType.EQUAL,
+                List.of(SplitShare.of("riya"), SplitShare.of("sam")), DAY);
+        assertTrue(report.build(ledger).contains("sam pays riya Rs 250.00"));
+    }
 }
