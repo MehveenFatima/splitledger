@@ -14,4 +14,11 @@ class MemberTest {
         assertEquals("riya", member.id());
         assertEquals("Riya Sharma", member.name());
     }
+
+    @Test
+    void rejectsMissingIdOrName() {
+        assertThrows(ValidationException.class, () -> new Member(" ", "Riya"));
+        assertThrows(ValidationException.class, () -> new Member(null, "Riya"));
+        assertThrows(ValidationException.class, () -> new Member("riya", " "));
+    }
 }
