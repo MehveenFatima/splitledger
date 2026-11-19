@@ -24,3 +24,8 @@ jobs:
       - name: Smoke test the demo script
         run: java -jar target/splitledger-1.0.0.jar --script examples/demo-trip.txt
 
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: jacoco-report
+          path: target/site/jacoco/
