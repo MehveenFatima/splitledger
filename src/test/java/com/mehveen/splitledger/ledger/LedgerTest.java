@@ -198,4 +198,10 @@ class LedgerTest {
                 Map.of("riya", Money.ofRupees(10)), NOV_1);
         assertThrows(ValidationException.class, () -> ledger.restoreExpense(copy));
     }
+
+    @Test
+    void removesMemberWithoutHistory() {
+        ledger.removeMember("sam");
+        assertFalse(ledger.hasMember("sam"));
+    }
 }
