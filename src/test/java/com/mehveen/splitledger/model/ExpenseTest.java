@@ -57,4 +57,12 @@ class ExpenseTest {
         assertThrows(ValidationException.class, () -> new Expense(1, "Dinner", "riya", Money.ofRupees(100),
                 Category.FOOD, SplitType.EXACT, shares("riya", "40", "sam", "50"), DAY));
     }
+
+    @Test
+    void rejectsBadIdAndEmptyShares() {
+        assertThrows(ValidationException.class, () ->
+                new Expense(0, "X", "riya", Money.ofRupees(1), null, null, shares("riya", "1"), DAY));
+        assertThrows(ValidationException.class, () ->
+                new Expense(1, "X", "riya", Money.ZERO, null, null, shares(), DAY));
+    }
 }
