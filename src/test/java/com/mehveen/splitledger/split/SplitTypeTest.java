@@ -23,4 +23,9 @@ class SplitTypeTest {
         assertEquals(SplitType.EQUAL, SplitType.fromString(null));
         assertEquals(SplitType.EQUAL, SplitType.fromString(""));
     }
+
+    @Test
+    void rejectsUnknownType() {
+        assertThrows(ValidationException.class, () -> SplitType.fromString("random"));
+    }
 }
