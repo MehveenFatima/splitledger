@@ -32,4 +32,12 @@ class CommandParserTest {
     void rejectsMissingClosingQuote() {
         assertThrows(ValidationException.class, () -> CommandParser.tokenize("expense add \"Dinner"));
     }
+
+    @Test
+    void separatesOptions() {
+        ParsedCommand command = CommandParser.parse("expense add Cab 300 --payer riya --with riya,sam");
+        assertEquals(List.of("expense", "add", "Cab", "300"), command.words());
+        assertEquals("riya", command.requireOption("payer"));
+        assertEquals("riya,sam", command.option("with").orElseThrow());
+    }
 }
