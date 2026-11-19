@@ -170,3 +170,10 @@ Dependabot keeps Maven and Actions versions up to date.
 - [ ] Export the report as Markdown or HTML
 - [ ] REST API version with Spring Boot
 
+## Contributing
+
+Contributions are welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md) first.
+
+## License
+
+[MIT](LICENSE) © 2026 Mehveen Fatima
