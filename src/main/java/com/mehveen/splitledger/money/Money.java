@@ -30,4 +30,8 @@ public final class Money implements Comparable<Money> {
     public long paise() {
         return paise;
     }
+
+    public static Money ofRupees(long rupees) {
+        return ofPaise(Math.multiplyExact(rupees, 100L));
+    }
 }
