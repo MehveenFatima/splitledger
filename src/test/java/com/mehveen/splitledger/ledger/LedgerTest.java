@@ -70,4 +70,12 @@ class LedgerTest {
         assertEquals(1, dinner("riya", "300").id());
         assertEquals(2, dinner("aman", "300").id());
     }
+
+    @Test
+    void rejectsUnknownPayerOrParticipant() {
+        assertThrows(NotFoundException.class, () -> dinner("zoe", "300"));
+        assertThrows(NotFoundException.class, () -> ledger.addExpense("Cab", "riya", Money.ofRupees(10),
+                Category.TRAVEL, SplitType.EQUAL, List.of(SplitShare.of("zoe")), NOV_19));
+        assertTrue(ledger.expenses().isEmpty());
+    }
 }
