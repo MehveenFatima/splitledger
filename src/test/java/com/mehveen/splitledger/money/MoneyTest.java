@@ -44,4 +44,9 @@ class MoneyTest {
     void parseAcceptsTrailingZeros() {
         assertEquals(150L, Money.parse("1.500").paise());
     }
+
+    @Test
+    void parseRejectsFractionsOfPaise() {
+        assertThrows(IllegalArgumentException.class, () -> Money.parse("1.005"));
+    }
 }
