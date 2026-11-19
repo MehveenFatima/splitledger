@@ -48,4 +48,10 @@ class EqualSplitStrategyTest {
         assertThrows(ValidationException.class, () -> strategy.split(Money.ZERO, List.of(SplitShare.of("a"))));
         assertThrows(ValidationException.class, () -> strategy.split(Money.ofRupees(1), List.of()));
     }
+
+    @Test
+    void rejectsDuplicateParticipants() {
+        assertThrows(ValidationException.class, () -> strategy.split(Money.ofRupees(10),
+                List.of(SplitShare.of("a"), SplitShare.of("A"))));
+    }
 }
