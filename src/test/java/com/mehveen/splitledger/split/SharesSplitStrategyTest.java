@@ -22,4 +22,12 @@ class SharesSplitStrategyTest {
         assertEquals(Money.ofRupees(7_500), result.get("b"));
         assertEquals(Money.ofRupees(7_500), result.get("c"));
     }
+
+    @Test
+    void allowsFractionalShares() {
+        Map<String, Money> result = strategy.split(Money.ofRupees(250),
+                List.of(SplitShare.of("a", "1.5"), SplitShare.of("b", "1")));
+        assertEquals(Money.ofRupees(150), result.get("a"));
+        assertEquals(Money.ofRupees(100), result.get("b"));
+    }
 }
