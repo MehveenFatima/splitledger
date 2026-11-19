@@ -44,4 +44,9 @@ class MemberTest {
     void ofStripsSymbols() {
         assertEquals("obrien", Member.of("O'Brien").id());
     }
+
+    @Test
+    void ofTruncatesLongNames() {
+        assertEquals(20, Member.of("b".repeat(30)).id().length());
+    }
 }
