@@ -34,4 +34,9 @@ class CsvCodecTest {
     void nullBecomesEmpty() {
         assertEquals("a,,b", CsvCodec.encode(Arrays.asList("a", null, "b")));
     }
+
+    @Test
+    void rejectsLineBreaks() {
+        assertThrows(IllegalArgumentException.class, () -> CsvCodec.escape("two\nlines"));
+    }
 }
