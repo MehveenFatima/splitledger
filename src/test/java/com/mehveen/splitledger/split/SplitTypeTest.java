@@ -43,4 +43,9 @@ class SplitTypeTest {
         assertEquals("riya", share.memberId());
         assertEquals(BigDecimal.ZERO, share.value());
     }
+
+    @Test
+    void splitShareFactoryParsesValue() {
+        assertEquals(new BigDecimal("12.5"), SplitShare.of("sam", "12.5").value());
+    }
 }
