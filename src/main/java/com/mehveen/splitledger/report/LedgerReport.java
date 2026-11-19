@@ -56,4 +56,11 @@ public class LedgerReport {
                 .forEach(e -> out.append(String.format("  %-14s %12s  (%s%%)%n",
                         e.getKey().label(), e.getValue().format(), percentOf(e.getValue(), ledger.totalSpent()))));
     }
+
+    static long percentOf(Money part, Money total) {
+        if (total.isZero()) {
+            return 0;
+        }
+        return Math.round(part.paise() * 100.0 / total.paise());
+    }
 }
