@@ -98,4 +98,11 @@ class CliTest {
         assertTrue(out.startsWith("Error:"));
         assertTrue(cli.ledger().expenses().isEmpty());
     }
+
+    @Test
+    void malformedPairIsAnError() {
+        addGroup();
+        assertTrue(run("expense add Rent 300 --payer sam --split exact --with riya").startsWith("Error:"));
+        assertTrue(run("expense add Rent 300 --payer sam --split exact --with riya:abc").contains("Not a number"));
+    }
 }
