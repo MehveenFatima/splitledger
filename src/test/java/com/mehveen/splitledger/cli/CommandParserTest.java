@@ -64,4 +64,11 @@ class CommandParserTest {
         ValidationException e = assertThrows(ValidationException.class, () -> CommandParser.parse("pay").word(1));
         assertTrue(e.getMessage().contains("help"));
     }
+
+    @Test
+    void missingOptionIsNamed() {
+        ValidationException e = assertThrows(ValidationException.class,
+                () -> CommandParser.parse("expense add Cab 10").requireOption("payer"));
+        assertEquals("Missing option --payer", e.getMessage());
+    }
 }
