@@ -42,4 +42,10 @@ class EqualSplitStrategyTest {
     void singleParticipantPaysAll() {
         assertEquals(Money.ofRupees(55), strategy.split(Money.ofRupees(55), List.of(SplitShare.of("a"))).get("a"));
     }
+
+    @Test
+    void rejectsZeroTotalAndNoParticipants() {
+        assertThrows(ValidationException.class, () -> strategy.split(Money.ZERO, List.of(SplitShare.of("a"))));
+        assertThrows(ValidationException.class, () -> strategy.split(Money.ofRupees(1), List.of()));
+    }
 }
