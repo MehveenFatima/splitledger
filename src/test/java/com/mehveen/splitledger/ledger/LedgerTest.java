@@ -78,4 +78,13 @@ class LedgerTest {
                 Category.TRAVEL, SplitType.EQUAL, List.of(SplitShare.of("zoe")), NOV_19));
         assertTrue(ledger.expenses().isEmpty());
     }
+
+    @Test
+    void balancesAfterOneExpense() {
+        dinner("riya", "900");
+        Map<String, Money> balances = ledger.balances();
+        assertEquals(Money.ofRupees(600), balances.get("riya"));
+        assertEquals(Money.ofRupees(-300), balances.get("aman"));
+        assertEquals(Money.ofRupees(-300), balances.get("sam"));
+    }
 }
