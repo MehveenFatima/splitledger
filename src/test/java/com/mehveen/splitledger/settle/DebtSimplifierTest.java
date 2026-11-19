@@ -86,4 +86,14 @@ class DebtSimplifierTest {
         assertEquals(first, second);
         assertEquals(new Transfer("b", "a", Money.ofRupees(100)), first.get(0));
     }
+
+    @Test
+    void transfersSettleEveryoneRandomized() {
+        Random random = new Random(42);
+        for (int round = 0; round < 200; round++) {
+            Map<String, Money> balances = randomBalances(random, 2 + random.nextInt(9));
+            List<Transfer> transfers = simplifier.simplify(balances);
+            apply(balances, transfers).values().forEach(left -> assertEquals(Money.ZERO, left));
+        }
+    }
 }
