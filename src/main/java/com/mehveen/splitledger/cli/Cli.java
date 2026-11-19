@@ -166,4 +166,31 @@ public class Cli {
         out.println("Added expense " + expense);
         expense.shares().forEach((id, share) -> out.println("  " + id + " owes " + share.format()));
     }
+
+    /**
+     * Parses {@code a,b,c} (equal split) or {@code a:300,b:200} (other splits).
+     * An empty list means "everyone in the group" for an equal split.
+     */
+    private List<SplitShare> parseShares(String spec, SplitType type) {
+        List<SplitShare> shares = new ArrayList<>();
+        if (spec.isBlank()) {
+            if (type.needsValues()) {
+                throw new ValidationException("A " + type.name().toLowerCase() + " split needs --with id:value,...");
+            }
+            ledger.members().forEach(m -> shares.add(SplitShare.of(m.id())));
+            return shares;
+        }
+        for (String part : spec.split(",")) {
+            String[] pieces = part.trim().split(":", 2);
+            if (type.needsValues()) {
+                if (pieces.length != 2) {
+                    throw new ValidationException("Expected id:value but got '" + part + "'");
+                }
+                shares.add(new SplitShare(pieces[0], parseDecimal(pieces[1])));
+            } else {
+                shares.add(SplitShare.of(pieces[0]));
+            }
+        }
+        return shares;
+    }
 }
