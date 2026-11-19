@@ -46,3 +46,16 @@ Balances after a trip: Aman **+3933.33**, Riya **-2866.67**, Sam **-1066.66**.
 
 Two payments settle three people.
 
+## Why it works
+
+- **Correctness:** every payment moves money from someone who owes to someone who is owed, and
+  never more than either of them needs, so no balance ever changes sign. The loop ends only when
+  one heap is empty; because the total is zero, the other heap is then empty too.
+- **At most n - 1 payments:** each payment removes at least one person from the heaps for good.
+  The very last payment removes two people (the final creditor and debtor are equal), so with `n`
+  people with a non-zero balance there are at most `n - 1` payments.
+
+Note: finding the *absolute* minimum number of payments is NP-hard in general (it is related to
+partitioning people into zero-sum groups). The greedy approach is the standard practical choice:
+fast, simple and never worse than `n - 1`.
+
