@@ -26,4 +26,9 @@ public record Payment(String fromId, String toId, Money amount, LocalDate date) 
             throw new ValidationException("Payment amount must be greater than zero");
         }
     }
+
+    @Override
+    public String toString() {
+        return date + " " + fromId + " paid " + toId + " " + amount.format();
+    }
 }
