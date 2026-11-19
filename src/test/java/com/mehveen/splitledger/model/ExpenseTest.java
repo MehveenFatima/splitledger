@@ -36,4 +36,12 @@ class ExpenseTest {
         assertEquals(DAY, e.date());
         assertEquals(2, e.shares().size());
     }
+
+    @Test
+    void descriptionIsTrimmedAndRequired() {
+        Expense e = new Expense(1, "  Cab ", "riya", Money.ofRupees(10), null, null, shares("riya", "10"), DAY);
+        assertEquals("Cab", e.description());
+        assertThrows(ValidationException.class, () ->
+                new Expense(2, " ", "riya", Money.ofRupees(10), null, null, shares("riya", "10"), DAY));
+    }
 }
