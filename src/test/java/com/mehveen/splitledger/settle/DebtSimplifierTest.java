@@ -115,4 +115,16 @@ class DebtSimplifierTest {
                     .forEach(t -> assertTrue(t.amount().isPositive()));
         }
     }
+
+    private static Map<String, Money> randomBalances(Random random, int n) {
+        Map<String, Money> balances = new LinkedHashMap<>();
+        long sum = 0;
+        for (int i = 0; i < n - 1; i++) {
+            long paise = random.nextInt(200_001) - 100_000;
+            balances.put("m" + i, Money.ofPaise(paise));
+            sum += paise;
+        }
+        balances.put("m" + (n - 1), Money.ofPaise(-sum));
+        return balances;
+    }
 }
