@@ -62,4 +62,11 @@ class LedgerReportTest {
         assertTrue(text.indexOf("rent") < text.indexOf("food"));
         assertTrue(text.contains("(95%)"));
     }
+
+    @Test
+    void percentOfRoundsAndHandlesZero() {
+        assertEquals(33L, LedgerReport.percentOf(Money.ofRupees(1), Money.ofRupees(3)));
+        assertEquals(67L, LedgerReport.percentOf(Money.ofRupees(2), Money.ofRupees(3)));
+        assertEquals(0L, LedgerReport.percentOf(Money.ZERO, Money.ZERO));
+    }
 }
