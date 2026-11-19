@@ -31,4 +31,12 @@ class PercentSplitStrategyTest {
         assertEquals(Money.ofRupees(100), sum);
         assertEquals(Money.parse("33.34"), result.get("c"));
     }
+
+    @Test
+    void rejectsPercentagesNotTotalling100() {
+        assertThrows(ValidationException.class, () -> strategy.split(Money.ofRupees(100),
+                List.of(SplitShare.of("a", "60"), SplitShare.of("b", "30"))));
+        assertThrows(ValidationException.class, () -> strategy.split(Money.ofRupees(100),
+                List.of(SplitShare.of("a", "60"), SplitShare.of("b", "50"))));
+    }
 }
