@@ -83,4 +83,11 @@ class CliTest {
         run("expense add Dinner 900 --payer riya");
         assertEquals(LocalDate.of(2026, 11, 19), cli.ledger().expenses().get(0).date());
     }
+
+    @Test
+    void sharesSplitFromOptions() {
+        addGroup();
+        run("expense add Rent 30000 --payer sam --split shares --with riya:2,aman:1,sam:1 --category rent");
+        assertEquals(Money.ofRupees(15_000), cli.ledger().spendingOf("riya"));
+    }
 }
