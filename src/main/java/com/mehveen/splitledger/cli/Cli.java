@@ -279,4 +279,17 @@ public class Cli {
                 .max(Comparator.comparing(Expense::amount))
                 .ifPresent(e -> out.println("Biggest expense: " + e));
     }
+
+    private void save(ParsedCommand command) {
+        Path file = Path.of(command.word(1));
+        store.save(ledger, file);
+        out.println("Saved to " + file);
+    }
+
+    private void load(ParsedCommand command) {
+        Path file = Path.of(command.word(1));
+        ledger = store.load(file);
+        out.println("Loaded " + ledger.members().size() + " members and "
+                + ledger.expenses().size() + " expenses from " + file);
+    }
 }
