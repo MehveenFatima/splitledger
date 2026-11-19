@@ -89,4 +89,16 @@ class LedgerStoreTest {
         LedgerException e = assertThrows(LedgerException.class, () -> store.load(file));
         assertTrue(e.getMessage().startsWith("Line 2"));
     }
+
+    @Test
+    void rejectsBadFieldCountsAndDates() throws IOException {
+        Path shortLine = dir.resolve("short.csv");
+        Files.write(shortLine, List.of("MEMBER,riya"));
+        assertThrows(LedgerException.class, () -> store.load(shortLine));
+
+        Path badDate = dir.resolve("date.csv");
+        Files.write(badDate, List.of("MEMBER,a,A", "MEMBER,b,B", "PAYMENT,19-11-2026,a,b,10"));
+        LedgerException e = assertThrows(LedgerException.class, () -> store.load(badDate));
+        assertTrue(e.getMessage().contains("YYYY-MM-DD"));
+    }
 }
