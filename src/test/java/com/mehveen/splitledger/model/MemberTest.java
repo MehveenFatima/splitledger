@@ -27,4 +27,9 @@ class MemberTest {
         assertThrows(ValidationException.class, () -> new Member("riya sharma", "Riya"));
         assertThrows(ValidationException.class, () -> new Member("riya@home", "Riya"));
     }
+
+    @Test
+    void rejectsTooLongId() {
+        assertThrows(ValidationException.class, () -> new Member("a".repeat(21), "Long"));
+    }
 }
