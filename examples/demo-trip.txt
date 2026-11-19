@@ -1,0 +1,15 @@
+# Goa trip demo - run with:  java -jar target/splitledger-1.0.0.jar --script examples/demo-trip.txt
+member add "Riya Sharma"
+member add "Aman Verma"
+member add "Sam Khan"
+expense add "Flight tickets" 18000 --payer aman --category travel --date 2026-11-14
+expense add "Beach shack dinner" 2450 --payer riya --category food --date 2026-11-15
+expense add "Villa rent" 12000 --payer sam --split shares --with riya:1,aman:1,sam:2 --category rent --date 2026-11-15
+expense add "Scuba diving" 7500 --payer riya --split exact --with riya:2500,aman:5000 --category entertainment --date 2026-11-16
+expense add "Souvenirs" 1000 --payer aman --split percent --with riya:50,aman:25,sam:25 --category shopping --date 2026-11-16
+balances
+settle
+pay sam aman 1066.66 --date 2026-11-17
+report
+stats
+exit
