@@ -49,4 +49,11 @@ class MoneyTest {
     void parseRejectsFractionsOfPaise() {
         assertThrows(IllegalArgumentException.class, () -> Money.parse("1.005"));
     }
+
+    @Test
+    void parseRejectsGarbageAndBlank() {
+        assertThrows(IllegalArgumentException.class, () -> Money.parse("ten"));
+        assertThrows(IllegalArgumentException.class, () -> Money.parse("  "));
+        assertThrows(IllegalArgumentException.class, () -> Money.parse(null));
+    }
 }
