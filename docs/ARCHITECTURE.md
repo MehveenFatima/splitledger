@@ -33,3 +33,12 @@ SplitLedger is a small layered application. Each layer only depends on the layer
 - **`settle.DebtSimplifier`** is stateless: balances in, list of `Transfer`s out.
   See [ALGORITHM.md](ALGORITHM.md).
 
+## Persistence and CLI
+
+- **`io.CsvCodec`** encodes and decodes one CSV line with proper quoting.
+- **`io.LedgerStore`** writes one record per line (`MEMBER`, `EXPENSE`, `PAYMENT`) and reports
+  load errors with the line number. Expenses are stored with their computed shares, so loading
+  never re-runs a split and always reproduces the same balances.
+- **`cli.CommandParser`** handles quoted words and `--options`; **`cli.Cli`** maps commands to
+  ledger calls. The CLI receives a `PrintStream` and a `Clock`, which makes it fully unit-testable.
+
