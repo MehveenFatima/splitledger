@@ -107,4 +107,19 @@ public class LedgerStore {
             default -> throw new IllegalArgumentException("Unknown record type '" + type + "'");
         }
     }
+
+    private static Expense decodeExpense(List<String> fields) {
+        requireFields(fields, 9);
+        Map<String, Money> shares = new LinkedHashMap<>();
+        for (String pair : fields.get(8).split(";")) {
+            String[] parts = pair.split("=", 2);
+            if (parts.length != 2) {
+                throw new IllegalArgumentException("Bad share '" + pair + "'");
+            }
+            shares.put(parts[0], Money.parse(parts[1]));
+        }
+        return new Expense(Integer.parseInt(fields.get(1)), fields.get(7), fields.get(3),
+                Money.parse(fields.get(4)), Category.fromString(fields.get(5)),
+                SplitType.fromString(fields.get(6)), shares, date(fields.get(2)));
+    }
 }
