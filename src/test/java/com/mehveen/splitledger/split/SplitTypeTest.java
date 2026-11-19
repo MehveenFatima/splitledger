@@ -36,4 +36,11 @@ class SplitTypeTest {
         assertTrue(SplitType.PERCENT.needsValues());
         assertTrue(SplitType.SHARES.needsValues());
     }
+
+    @Test
+    void splitShareNormalizesInput() {
+        SplitShare share = new SplitShare(" Riya ", null);
+        assertEquals("riya", share.memberId());
+        assertEquals(BigDecimal.ZERO, share.value());
+    }
 }
