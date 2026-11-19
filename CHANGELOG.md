@@ -6,7 +6,8 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [Unreleased]
 
 ### Added
-- `export <file.md>` command and `MarkdownReport` for sharing a summary.
+- `export <file.md>` command and `MarkdownReport` for sharing a summary (#11).
+- `--sort id|date|amount` and `--limit n` options for the `expenses` command.
 
 ### Fixed
 - Clear error message when a member id cannot be derived from a name (#9).

@@ -23,11 +23,11 @@ computes a **minimal settle-up plan**: with `n` people it never needs more than 
 - **Paise-exact money**: amounts are stored as whole paise, so ₹100 / 3 becomes 33.34 + 33.33 + 33.33 and nothing is ever lost to rounding
 - **Smart settle-up**: a greedy two-heap algorithm turns balances into the fewest payments
 - **Categories and reports**: spending per category, per person, top spender and biggest expense
-- **Filters**: list expenses by member, category or date range
+- **Filters and sorting**: list expenses by member, category or date range, sorted by date or amount, with an optional limit
 - **Save and load** a ledger as a readable CSV file
 - **Export to Markdown** with balance and expense tables and a settle-up checklist
 - **Script mode** to replay a list of commands (great for demos and CI smoke tests)
-- **171 unit tests** covering money arithmetic, every split type, the settlement algorithm (including randomized property tests), storage and the CLI
+- **174 unit tests** covering money arithmetic, every split type, the settlement algorithm (including randomized property tests), storage and the CLI
 
 ## Quick start
 
@@ -79,7 +79,7 @@ Settle everyone in 2 payment(s):
 | `members` | List members with their current balance. |
 | `expense add <description> <amount> --payer <id> [options]` | Record an expense (options below). |
 | `expense remove <id>` | Delete an expense, e.g. `expense remove #3`. |
-| `expenses [--member id] [--category c] [--from date] [--to date]` | List and filter expenses. |
+| `expenses [--member id] [--category c] [--from date] [--to date] [--sort id\|date\|amount] [--limit n]` | List, filter and sort expenses, e.g. `expenses --sort amount --limit 5` for the five biggest. |
 | `pay <from> <to> <amount> [--date d]` | Record a settle-up payment. |
 | `balances` | Who owes and who is owed, in plain words. |
 | `settle` | The fewest payments that settle everyone. |
@@ -152,7 +152,7 @@ More detail in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 ## Running the tests
 
 ```bash
-mvn test        # 171 unit tests
+mvn test        # 174 unit tests
 mvn verify      # tests + JaCoCo coverage report in target/site/jacoco/index.html
 ```
 

@@ -110,6 +110,7 @@ public class Cli {
                         [--date YYYY-MM-DD]               record an expense
                   expense remove <id>                     delete an expense
                   expenses [--member id] [--category c] [--from date] [--to date]
+                        [--sort id|date|amount] [--limit n]
                   pay <from> <to> <amount> [--date d]     record a settle-up payment
                   balances                                who owes and who is owed
                   settle                                  fewest payments to settle everyone
@@ -233,11 +234,36 @@ public class Cli {
             String id = ledger.member(command.option("member").get()).id();
             found = found.stream().filter(e -> e.involves(id)).toList();
         }
+        found = sortAndLimit(found, command);
         if (found.isEmpty()) {
             out.println("No expenses found.");
             return;
         }
         found.forEach(out::println);
+    }
+
+    /** Applies {@code --sort date|amount} and {@code --limit n} to an expense list. */
+    private static List<Expense> sortAndLimit(List<Expense> expenses, ParsedCommand command) {
+        Comparator<Expense> order = switch (command.option("sort").orElse("id").toLowerCase()) {
+            case "id" -> Comparator.comparingInt(Expense::id);
+            case "date" -> Comparator.comparing(Expense::date).thenComparingInt(Expense::id);
+            case "amount" -> Comparator.comparing(Expense::amount).reversed().thenComparingInt(Expense::id);
+            default -> throw new ValidationException("Sort by id, date or amount");
+        };
+        int limit = command.option("limit").map(Cli::parseLimit).orElse(Integer.MAX_VALUE);
+        return expenses.stream().sorted(order).limit(limit).toList();
+    }
+
+    private static int parseLimit(String text) {
+        try {
+            int limit = Integer.parseInt(text.trim());
+            if (limit > 0) {
+                return limit;
+            }
+        } catch (NumberFormatException e) {
+            // fall through to the error below
+        }
+        throw new ValidationException("--limit must be a positive whole number");
     }
 
     private void pay(ParsedCommand command) {
