@@ -87,3 +87,19 @@ Settle everyone in 2 payment(s):
 | `save <file>` / `load <file>` | Store or restore the ledger. |
 | `help` / `exit` | Show help / quit. |
 
+### Expense options
+
+| Option | Meaning | Default |
+|---|---|---|
+| `--split equal\|exact\|percent\|shares` | How to divide the amount | `equal` |
+| `--with ...` | Participants: `a,b,c` for equal; `a:300,b:200` for the others | everyone (equal only) |
+| `--category ...` | `food`, `travel`, `rent`, `utilities`, `shopping`, `entertainment`, `other` | `other` |
+| `--date YYYY-MM-DD` | When it happened | today |
+
+| Split | Example | Result for ₹1,200 |
+|---|---|---|
+| equal | `--with riya,aman,sam` | 400 / 400 / 400 |
+| exact | `--with riya:700,aman:500` | 700 / 500 (must add up to 1,200) |
+| percent | `--with riya:50,aman:25,sam:25` | 600 / 300 / 300 (must add up to 100) |
+| shares | `--with riya:2,aman:1,sam:1` | 600 / 300 / 300 |
+
