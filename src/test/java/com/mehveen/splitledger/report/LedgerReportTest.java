@@ -51,4 +51,15 @@ class LedgerReportTest {
                 List.of(SplitShare.of("riya"), SplitShare.of("sam")), DAY);
         assertTrue(report.build(ledger).contains("sam pays riya Rs 250.00"));
     }
+
+    @Test
+    void categoriesLargestFirst() {
+        ledger.addExpense("Snacks", "riya", Money.ofRupees(50), Category.FOOD, SplitType.EQUAL,
+                List.of(SplitShare.of("riya")), DAY);
+        ledger.addExpense("Rent", "sam", Money.ofRupees(950), Category.RENT, SplitType.EQUAL,
+                List.of(SplitShare.of("sam")), DAY);
+        String text = report.build(ledger);
+        assertTrue(text.indexOf("rent") < text.indexOf("food"));
+        assertTrue(text.contains("(95%)"));
+    }
 }
