@@ -162,4 +162,9 @@ class MoneyTest {
         assertEquals("Rs 99.90", Money.parse("99.9").format());
         assertEquals("-Rs 5.00", Money.ofRupees(-5).format());
     }
+
+    @Test
+    void toRupeesKeepsScale() {
+        assertEquals(new BigDecimal("7.05"), Money.ofPaise(705).toRupees());
+    }
 }
