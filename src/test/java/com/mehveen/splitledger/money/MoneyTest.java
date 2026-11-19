@@ -33,4 +33,10 @@ class MoneyTest {
     void parsesWholeNumbers() {
         assertEquals(120_000L, Money.parse("1200").paise());
     }
+
+    @Test
+    void parsesDecimals() {
+        assertEquals(1050L, Money.parse("10.5").paise());
+        assertEquals(1099L, Money.parse("10.99").paise());
+    }
 }
