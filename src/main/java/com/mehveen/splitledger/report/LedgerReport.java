@@ -44,4 +44,16 @@ public class LedgerReport {
                     member.id(), ledger.spendingOf(member.id()).format(), balances.get(member.id()).format()));
         }
     }
+
+    private void appendCategories(StringBuilder out, Ledger ledger) {
+        Map<Category, Money> totals = ledger.totalsByCategory();
+        if (totals.isEmpty()) {
+            return;
+        }
+        out.append("\nBy category:\n");
+        totals.entrySet().stream()
+                .sorted(Map.Entry.<Category, Money>comparingByValue(Comparator.reverseOrder()))
+                .forEach(e -> out.append(String.format("  %-14s %12s  (%s%%)%n",
+                        e.getKey().label(), e.getValue().format(), percentOf(e.getValue(), ledger.totalSpent()))));
+    }
 }
