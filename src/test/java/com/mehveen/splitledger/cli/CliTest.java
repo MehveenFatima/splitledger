@@ -155,4 +155,13 @@ class CliTest {
         assertTrue(out.contains("Cab"));
         assertFalse(out.contains("Tea"));
     }
+
+    @Test
+    void statsShowsTopSpender() {
+        addGroup();
+        run("expense add Rent 30000 --payer sam --split shares --with riya:2,aman:1,sam:1");
+        String out = run("stats");
+        assertTrue(out.contains("Total spent: Rs 30000.00"));
+        assertTrue(out.contains("Top spender: riya"));
+    }
 }
