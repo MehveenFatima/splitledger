@@ -17,4 +17,10 @@ class SplitTypeTest {
         assertEquals(SplitType.PERCENT, SplitType.fromString("Percent"));
         assertEquals(SplitType.SHARES, SplitType.fromString("shares"));
     }
+
+    @Test
+    void defaultsToEqual() {
+        assertEquals(SplitType.EQUAL, SplitType.fromString(null));
+        assertEquals(SplitType.EQUAL, SplitType.fromString(""));
+    }
 }
