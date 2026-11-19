@@ -33,4 +33,9 @@ public class PercentSplitStrategy extends AbstractSplitStrategy {
         }
         return percents;
     }
+
+    @Override
+    protected Map<String, Money> compute(Money total, List<SplitShare> shares) {
+        return zip(shares, total.allocate(validatedPercents(shares)));
+    }
 }
