@@ -180,4 +180,12 @@ class CliTest {
     void unknownCommandPointsToHelp() {
         assertTrue(run("dance").contains("Type 'help'"));
     }
+
+    @Test
+    void badInputPrintsError() {
+        addGroup();
+        assertTrue(run("expense add Dinner lots --payer riya").startsWith("Error:"));
+        assertTrue(run("pay riya ghost 10").startsWith("Error:"));
+        assertTrue(run("load /definitely/not/here.csv").startsWith("Error:"));
+    }
 }
