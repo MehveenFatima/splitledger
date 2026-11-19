@@ -56,4 +56,17 @@ public class LedgerStore {
             throw new UncheckedIOException("Could not save ledger to " + file, e);
         }
     }
+
+    private static String encodeExpense(Expense expense) {
+        StringBuilder shares = new StringBuilder();
+        expense.shares().forEach((id, amount) -> {
+            if (shares.length() > 0) {
+                shares.append(';');
+            }
+            shares.append(id).append('=').append(amount);
+        });
+        return CsvCodec.encode(List.of("EXPENSE", String.valueOf(expense.id()), expense.date().toString(),
+                expense.payerId(), expense.amount().toString(), expense.category().label(),
+                expense.splitType().name().toLowerCase(), expense.description(), shares.toString()));
+    }
 }
