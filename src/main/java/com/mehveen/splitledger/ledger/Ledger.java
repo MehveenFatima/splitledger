@@ -69,4 +69,19 @@ public class Ledger {
     public List<Member> members() {
         return List.copyOf(members.values());
     }
+
+    public Expense addExpense(String description, String payerId, Money amount, Category category,
+                              SplitType splitType, List<SplitShare> shares, LocalDate date) {
+        Member payer = member(payerId);
+        if (shares != null) {
+            for (SplitShare share : shares) {
+                member(share.memberId());
+            }
+        }
+        Map<String, Money> computed = strategies.forType(splitType).split(amount, shares);
+        Expense expense = new Expense(nextExpenseId++, description, payer.id(), amount,
+                category, splitType, computed, date);
+        expenses.add(expense);
+        return expense;
+    }
 }
