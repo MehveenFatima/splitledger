@@ -46,4 +46,9 @@ class LedgerTest {
         assertTrue(ledger.expenses().isEmpty());
         assertTrue(ledger.isSettled());
     }
+
+    @Test
+    void rejectsDuplicateMember() {
+        assertThrows(ValidationException.class, () -> ledger.addMember(new Member("RIYA", "Another Riya")));
+    }
 }
