@@ -217,4 +217,12 @@ class LedgerTest {
         ledger.recordPayment("aman", "sam", Money.ofRupees(5), NOV_19);
         assertThrows(ValidationException.class, () -> ledger.removeMember("aman"));
     }
+
+    @Test
+    void collectionsAreReadOnly() {
+        dinner("riya", "30");
+        assertThrows(UnsupportedOperationException.class, () -> ledger.expenses().clear());
+        assertThrows(UnsupportedOperationException.class, () -> ledger.members().clear());
+        assertThrows(UnsupportedOperationException.class, () -> ledger.balances().clear());
+    }
 }
