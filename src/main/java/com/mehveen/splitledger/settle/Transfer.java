@@ -9,4 +9,9 @@ import com.mehveen.splitledger.money.Money;
  * @param toId   member who should receive
  */
 public record Transfer(String fromId, String toId, Money amount) {
+
+    @Override
+    public String toString() {
+        return fromId + " pays " + toId + " " + amount.format();
+    }
 }
