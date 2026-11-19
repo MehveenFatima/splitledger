@@ -65,4 +65,11 @@ class ExpenseTest {
         assertThrows(ValidationException.class, () ->
                 new Expense(1, "X", "riya", Money.ZERO, null, null, shares(), DAY));
     }
+
+    @Test
+    void shareOfNonParticipantIsZero() {
+        Expense e = new Expense(1, "Cab", "riya", Money.ofRupees(10), null, null, shares("riya", "10"), DAY);
+        assertEquals(Money.ofRupees(10), e.shareOf("riya"));
+        assertEquals(Money.ZERO, e.shareOf("sam"));
+    }
 }
