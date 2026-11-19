@@ -153,4 +153,17 @@ public final class Money implements Comparable<Money> {
     public int compareTo(Money other) {
         return Long.compare(paise, other.paise);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        return o instanceof Money other && paise == other.paise;
+    }
+
+    @Override
+    public int hashCode() {
+        return Long.hashCode(paise);
+    }
 }
