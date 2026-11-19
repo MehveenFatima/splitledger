@@ -96,4 +96,19 @@ public class Ledger {
         nextExpenseId = Math.max(nextExpenseId, expense.id() + 1);
         return expense;
     }
+
+    public Optional<Expense> findExpense(int id) {
+        return expenses.stream().filter(e -> e.id() == id).findFirst();
+    }
+
+    public Expense removeExpense(int id) {
+        Expense expense = findExpense(id)
+                .orElseThrow(() -> new NotFoundException("No expense with id #" + id));
+        expenses.remove(expense);
+        return expense;
+    }
+
+    public List<Expense> expenses() {
+        return Collections.unmodifiableList(expenses);
+    }
 }
