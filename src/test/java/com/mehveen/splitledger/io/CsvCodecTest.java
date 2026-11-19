@@ -55,4 +55,10 @@ class CsvCodecTest {
     void rejectsUnterminatedQuote() {
         assertThrows(IllegalArgumentException.class, () -> CsvCodec.decode("a,\"oops"));
     }
+
+    @Test
+    void roundTrip() {
+        List<String> fields = List.of("EXPENSE", "Chai, samosa", "He said \"wow\"", " x ", "");
+        assertEquals(fields, CsvCodec.decode(CsvCodec.encode(fields)));
+    }
 }
