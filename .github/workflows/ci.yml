@@ -25,7 +25,7 @@ jobs:
         run: java -jar target/splitledger-1.0.0.jar --script examples/demo-trip.txt
 
       - name: Upload coverage report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: jacoco-report
           path: target/site/jacoco/
