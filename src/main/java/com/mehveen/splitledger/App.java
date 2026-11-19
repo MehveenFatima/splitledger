@@ -36,4 +36,17 @@ public final class App {
             }
         }
     }
+
+    /** Runs every line of a script file through the CLI; handy for demos. */
+    public static void runScript(Cli cli, Path script) throws IOException {
+        for (String line : Files.readAllLines(script, StandardCharsets.UTF_8)) {
+            if (line.isBlank() || line.strip().startsWith("#")) {
+                continue;
+            }
+            System.out.println("splitledger> " + line);
+            if (!cli.execute(line)) {
+                break;
+            }
+        }
+    }
 }
