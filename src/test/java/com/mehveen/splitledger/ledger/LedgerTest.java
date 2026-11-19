@@ -58,4 +58,10 @@ class LedgerTest {
         assertTrue(ledger.hasMember("Sam"));
         assertFalse(ledger.hasMember("zoe"));
     }
+
+    @Test
+    void unknownMemberIsNotFound() {
+        assertThrows(NotFoundException.class, () -> ledger.member("zoe"));
+        assertThrows(NotFoundException.class, () -> ledger.member(null));
+    }
 }
