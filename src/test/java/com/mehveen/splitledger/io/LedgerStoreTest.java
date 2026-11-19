@@ -101,4 +101,11 @@ class LedgerStoreTest {
         LedgerException e = assertThrows(LedgerException.class, () -> store.load(badDate));
         assertTrue(e.getMessage().contains("YYYY-MM-DD"));
     }
+
+    @Test
+    void createsParentDirectories() {
+        Path file = dir.resolve("nested/folder/trip.csv");
+        store.save(sampleLedger(), file);
+        assertTrue(Files.exists(file));
+    }
 }
