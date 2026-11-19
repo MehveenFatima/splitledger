@@ -45,4 +45,9 @@ class CsvCodecTest {
         assertEquals(List.of("a", "", "c"), CsvCodec.decode("a,,c"));
         assertEquals(List.of(""), CsvCodec.decode(""));
     }
+
+    @Test
+    void decodesQuotedFields() {
+        assertEquals(List.of("x", "Dinner, \"fancy\""), CsvCodec.decode("x,\"Dinner, \"\"fancy\"\"\""));
+    }
 }
