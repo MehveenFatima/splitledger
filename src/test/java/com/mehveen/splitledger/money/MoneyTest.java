@@ -28,4 +28,9 @@ class MoneyTest {
     void ofRupeesRejectsOverflow() {
         assertThrows(ArithmeticException.class, () -> Money.ofRupees(Long.MAX_VALUE));
     }
+
+    @Test
+    void parsesWholeNumbers() {
+        assertEquals(120_000L, Money.parse("1200").paise());
+    }
 }
