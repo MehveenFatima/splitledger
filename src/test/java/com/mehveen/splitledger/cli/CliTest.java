@@ -90,4 +90,12 @@ class CliTest {
         run("expense add Rent 30000 --payer sam --split shares --with riya:2,aman:1,sam:1 --category rent");
         assertEquals(Money.ofRupees(15_000), cli.ledger().spendingOf("riya"));
     }
+
+    @Test
+    void nonEqualSplitNeedsWith() {
+        addGroup();
+        String out = run("expense add Rent 300 --payer sam --split exact");
+        assertTrue(out.startsWith("Error:"));
+        assertTrue(cli.ledger().expenses().isEmpty());
+    }
 }
