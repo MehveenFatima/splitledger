@@ -26,4 +26,9 @@ public enum SplitType {
                     "Unknown split type '" + text + "'. Use equal, exact, percent or shares");
         }
     }
+
+    /** Whether each participant must supply a value (amount, percent or shares). */
+    public boolean needsValues() {
+        return this != EQUAL;
+    }
 }
