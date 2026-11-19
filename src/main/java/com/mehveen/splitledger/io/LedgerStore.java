@@ -69,4 +69,26 @@ public class LedgerStore {
                 expense.payerId(), expense.amount().toString(), expense.category().label(),
                 expense.splitType().name().toLowerCase(), expense.description(), shares.toString()));
     }
+
+    public Ledger load(Path file) {
+        List<String> lines;
+        try {
+            lines = Files.readAllLines(file, StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            throw new UncheckedIOException("Could not read ledger from " + file, e);
+        }
+        Ledger ledger = new Ledger();
+        for (int i = 0; i < lines.size(); i++) {
+            String line = lines.get(i).strip();
+            if (line.isEmpty() || line.startsWith("#")) {
+                continue;
+            }
+            try {
+                applyRecord(ledger, CsvCodec.decode(line));
+            } catch (RuntimeException e) {
+                throw new LedgerException("Line " + (i + 1) + " of " + file.getFileName() + ": " + e.getMessage());
+            }
+        }
+        return ledger;
+    }
 }
