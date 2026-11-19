@@ -157,3 +157,9 @@ mvn verify      # tests + JaCoCo coverage report in target/site/jacoco/index.htm
 The settlement algorithm also has randomized property tests: for hundreds of random balanced
 inputs they check that the plan settles everyone and never uses more than `n - 1` payments.
 
+## Continuous integration
+
+GitHub Actions builds the project on every push and pull request (`.github/workflows/ci.yml`):
+it runs all tests, runs the Goa trip demo script as a smoke test and uploads the coverage report.
+Dependabot keeps Maven and Actions versions up to date.
+
