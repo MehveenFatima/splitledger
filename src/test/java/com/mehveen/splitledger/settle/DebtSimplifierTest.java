@@ -106,4 +106,13 @@ class DebtSimplifierTest {
             assertTrue(transfers.size() <= n - 1, "too many transfers: " + transfers.size());
         }
     }
+
+    @Test
+    void transferAmountsArePositive() {
+        Random random = new Random(3);
+        for (int round = 0; round < 100; round++) {
+            simplifier.simplify(randomBalances(random, 6))
+                    .forEach(t -> assertTrue(t.amount().isPositive()));
+        }
+    }
 }
