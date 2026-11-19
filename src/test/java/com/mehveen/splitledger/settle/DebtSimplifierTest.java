@@ -39,4 +39,9 @@ class DebtSimplifierTest {
     void emptyBalancesNeedNoTransfers() {
         assertTrue(simplifier.simplify(Map.of()).isEmpty());
     }
+
+    @Test
+    void settledGroupNeedsNoTransfers() {
+        assertTrue(simplifier.simplify(balances("a", 0, "b", 0)).isEmpty());
+    }
 }
