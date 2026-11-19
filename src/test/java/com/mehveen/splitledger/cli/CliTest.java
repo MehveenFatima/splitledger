@@ -68,4 +68,12 @@ class CliTest {
     void membersWhenEmpty() {
         assertTrue(run("members").contains("No members yet"));
     }
+
+    @Test
+    void equalExpenseDefaultsToEveryone() {
+        addGroup();
+        run("expense add Dinner 900 --payer riya --category food");
+        assertEquals(Money.ofRupees(600), cli.ledger().balanceOf("riya"));
+        assertEquals(Money.ofRupees(-300), cli.ledger().balanceOf("sam"));
+    }
 }
