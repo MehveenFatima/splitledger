@@ -21,4 +21,10 @@ class MemberTest {
         assertThrows(ValidationException.class, () -> new Member(null, "Riya"));
         assertThrows(ValidationException.class, () -> new Member("riya", " "));
     }
+
+    @Test
+    void rejectsInvalidIdCharacters() {
+        assertThrows(ValidationException.class, () -> new Member("riya sharma", "Riya"));
+        assertThrows(ValidationException.class, () -> new Member("riya@home", "Riya"));
+    }
 }
