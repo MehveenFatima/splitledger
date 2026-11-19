@@ -113,4 +113,22 @@ public class Cli {
                   save <file> / load <file>               store or restore the ledger
                   exit                                    quit""");
     }
+
+    private void member(String sub, ParsedCommand command) {
+        switch (sub) {
+            case "add" -> {
+                String name = command.word(2);
+                Member member = command.option("id")
+                        .map(id -> new Member(id, name))
+                        .orElseGet(() -> Member.of(name));
+                ledger.addMember(member);
+                out.println("Added " + member.name() + " (id: " + member.id() + ")");
+            }
+            case "remove" -> {
+                Member removed = ledger.removeMember(command.word(2));
+                out.println("Removed " + removed.name());
+            }
+            default -> throw new ValidationException("Use 'member add <name>' or 'member remove <id>'");
+        }
+    }
 }
