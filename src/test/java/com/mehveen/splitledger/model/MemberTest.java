@@ -39,4 +39,9 @@ class MemberTest {
         assertEquals("aman", member.id());
         assertEquals("Aman Verma", member.name());
     }
+
+    @Test
+    void ofStripsSymbols() {
+        assertEquals("obrien", Member.of("O'Brien").id());
+    }
 }
