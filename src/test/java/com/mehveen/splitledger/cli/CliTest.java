@@ -175,4 +175,9 @@ class CliTest {
         assertTrue(run("load " + file).contains("Loaded 3 members and 1 expenses"));
         assertFalse(cli.ledger().hasMember("zoe"));
     }
+
+    @Test
+    void unknownCommandPointsToHelp() {
+        assertTrue(run("dance").contains("Type 'help'"));
+    }
 }
