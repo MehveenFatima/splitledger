@@ -52,4 +52,9 @@ class CliTest {
         assertTrue(out.contains("expense add"));
         assertTrue(out.contains("settle"));
     }
+
+    @Test
+    void memberAddDerivesId() {
+        assertTrue(run("member add \"Riya Sharma\"").contains("Added Riya Sharma (id: riya)"));
+    }
 }
