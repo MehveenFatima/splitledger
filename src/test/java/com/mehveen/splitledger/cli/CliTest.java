@@ -139,4 +139,10 @@ class CliTest {
         run("pay aman riya 300");
         assertTrue(run("balances").contains("aman is settled up"));
     }
+
+    @Test
+    void settledGroupMessage() {
+        addGroup();
+        assertTrue(run("settle").contains("Everyone is settled up."));
+    }
 }
