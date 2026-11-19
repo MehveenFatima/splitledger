@@ -131,4 +131,15 @@ public class Cli {
             default -> throw new ValidationException("Use 'member add <name>' or 'member remove <id>'");
         }
     }
+
+    private void listMembers() {
+        if (ledger.members().isEmpty()) {
+            out.println("No members yet. Add one with: member add <name>");
+            return;
+        }
+        Map<String, Money> balances = ledger.balances();
+        for (Member member : ledger.members()) {
+            out.printf("%-12s %-20s %12s%n", member.id(), member.name(), balances.get(member.id()).format());
+        }
+    }
 }
