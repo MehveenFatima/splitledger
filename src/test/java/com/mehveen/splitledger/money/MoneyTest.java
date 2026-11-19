@@ -100,4 +100,12 @@ class MoneyTest {
         List<Money> parts = Money.ofRupees(100).allocate(3);
         assertEquals(List.of(Money.parse("33.34"), Money.parse("33.33"), Money.parse("33.33")), parts);
     }
+
+    @Test
+    void allocateByWeightsAddsUpExactly() {
+        Money total = Money.parse("999.99");
+        List<Money> parts = total.allocate(List.of(new BigDecimal("3"), new BigDecimal("5"), new BigDecimal("7")));
+        Money sum = parts.stream().reduce(Money.ZERO, Money::plus);
+        assertEquals(total, sum);
+    }
 }
