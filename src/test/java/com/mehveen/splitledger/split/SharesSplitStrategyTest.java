@@ -30,4 +30,10 @@ class SharesSplitStrategyTest {
         assertEquals(Money.ofRupees(150), result.get("a"));
         assertEquals(Money.ofRupees(100), result.get("b"));
     }
+
+    @Test
+    void rejectsZeroShares() {
+        assertThrows(ValidationException.class, () -> strategy.split(Money.ofRupees(100),
+                List.of(SplitShare.of("a", "1"), SplitShare.of("b", "0"))));
+    }
 }
