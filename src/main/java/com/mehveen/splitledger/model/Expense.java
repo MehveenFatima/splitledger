@@ -53,4 +53,36 @@ public final class Expense {
             throw new ValidationException("Shares add up to " + sum.format() + " but amount is " + amount.format());
         }
     }
+
+    public int id() {
+        return id;
+    }
+
+    public String description() {
+        return description;
+    }
+
+    public String payerId() {
+        return payerId;
+    }
+
+    public Money amount() {
+        return amount;
+    }
+
+    public Category category() {
+        return category;
+    }
+
+    public SplitType splitType() {
+        return splitType;
+    }
+
+    public Map<String, Money> shares() {
+        return shares;
+    }
+
+    public LocalDate date() {
+        return date;
+    }
 }
