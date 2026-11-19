@@ -30,4 +30,11 @@ class EqualSplitStrategyTest {
         assertEquals(Money.parse("33.34"), result.get("a"));
         assertEquals(Money.parse("33.33"), result.get("c"));
     }
+
+    @Test
+    void keepsParticipantOrder() {
+        Map<String, Money> result = strategy.split(Money.ofRupees(10),
+                List.of(SplitShare.of("zed"), SplitShare.of("amy")));
+        assertEquals(List.of("zed", "amy"), List.copyOf(result.keySet()));
+    }
 }
