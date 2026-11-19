@@ -188,6 +188,35 @@ class CliTest {
     }
 
     @Test
+    void expensesSortedByAmountWithLimit() {
+        addGroup();
+        run("expense add Tea 30 --payer riya");
+        run("expense add Rent 3000 --payer sam");
+        run("expense add Cab 300 --payer aman");
+        String out = run("expenses --sort amount --limit 2");
+        assertTrue(out.indexOf("Rent") < out.indexOf("Cab"));
+        assertFalse(out.contains("Tea"));
+    }
+
+    @Test
+    void expensesSortedByDate() {
+        addGroup();
+        run("expense add Late 10 --payer riya --date 2026-11-20");
+        run("expense add Early 10 --payer riya --date 2026-11-01");
+        String out = run("expenses --sort date");
+        assertTrue(out.indexOf("Early") < out.indexOf("Late"));
+    }
+
+    @Test
+    void invalidSortOrLimitIsAnError() {
+        addGroup();
+        run("expense add Tea 30 --payer riya");
+        assertTrue(run("expenses --sort name").startsWith("Error:"));
+        assertTrue(run("expenses --limit 0").startsWith("Error:"));
+        assertTrue(run("expenses --limit ten").startsWith("Error:"));
+    }
+
+    @Test
     void unknownCommandPointsToHelp() {
         assertTrue(run("dance").contains("Type 'help'"));
     }
