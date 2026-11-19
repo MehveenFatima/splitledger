@@ -59,3 +59,13 @@ Note: finding the *absolute* minimum number of payments is NP-hard in general (i
 partitioning people into zero-sum groups). The greedy approach is the standard practical choice:
 fast, simple and never worse than `n - 1`.
 
+## Complexity
+
+| | Cost |
+|---|---|
+| Building the heaps | O(n log n) |
+| Each loop iteration | O(log n) heap operations |
+| Number of iterations | at most n - 1 |
+| **Total time** | **O(n log n)** |
+| **Extra space** | **O(n)** |
+
