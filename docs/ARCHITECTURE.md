@@ -49,3 +49,9 @@ All business rule violations throw a subclass of `LedgerException`
 and keeps running, so a typo never loses the user's data. Programming errors (for example a split
 whose parts do not add up) throw `IllegalStateException` and are covered by tests.
 
+## Extending: adding a new split type
+
+1. Add a constant to `SplitType`.
+2. Create a class extending `AbstractSplitStrategy` and implement `compute`.
+3. Register it in the default constructor of `SplitStrategyFactory`.
+4. Add a test class next to the existing strategy tests.
