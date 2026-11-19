@@ -73,4 +73,9 @@ class DebtSimplifierTest {
         List<Transfer> transfers = simplifier.simplify(balances("a", -100, "b", 0, "c", 100));
         assertEquals(List.of(new Transfer("a", "c", Money.ofRupees(100))), transfers);
     }
+
+    @Test
+    void rejectsUnbalancedInput() {
+        assertThrows(IllegalArgumentException.class, () -> simplifier.simplify(balances("a", 100, "b", -50)));
+    }
 }
