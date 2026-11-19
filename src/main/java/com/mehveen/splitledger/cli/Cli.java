@@ -240,4 +240,16 @@ public class Cli {
         Payment payment = ledger.recordPayment(command.word(1), command.word(2), amount, date);
         out.println("Recorded: " + payment);
     }
+
+    private void balances() {
+        ledger.balances().forEach((id, balance) -> {
+            if (balance.isPositive()) {
+                out.println(id + " is owed " + balance.format());
+            } else if (balance.isNegative()) {
+                out.println(id + " owes " + balance.abs().format());
+            } else {
+                out.println(id + " is settled up");
+            }
+        });
+    }
 }
