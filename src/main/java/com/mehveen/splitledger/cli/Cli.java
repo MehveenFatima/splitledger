@@ -252,4 +252,14 @@ public class Cli {
             }
         });
     }
+
+    private void settle() {
+        List<Transfer> transfers = simplifier.simplify(ledger.balances());
+        if (transfers.isEmpty()) {
+            out.println("Everyone is settled up.");
+            return;
+        }
+        out.println("Settle everyone in " + transfers.size() + " payment(s):");
+        transfers.forEach(t -> out.println("  " + t));
+    }
 }
