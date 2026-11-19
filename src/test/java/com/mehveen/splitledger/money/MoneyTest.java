@@ -69,4 +69,12 @@ class MoneyTest {
         assertEquals(Money.parse("13.00"), a.plus(b));
         assertEquals(Money.parse("7.50"), a.minus(b));
     }
+
+    @Test
+    void negateAndAbs() {
+        Money five = Money.ofRupees(5);
+        assertEquals(-500L, five.negate().paise());
+        assertEquals(five, five.negate().abs());
+        assertSame(five, five.abs());
+    }
 }
