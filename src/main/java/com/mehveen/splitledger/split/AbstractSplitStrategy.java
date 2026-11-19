@@ -33,4 +33,13 @@ public abstract class AbstractSplitStrategy implements SplitStrategy {
     }
 
     protected abstract Map<String, Money> compute(Money total, List<SplitShare> shares);
+
+    private static void rejectDuplicates(List<SplitShare> shares) {
+        Set<String> seen = new HashSet<>();
+        for (SplitShare share : shares) {
+            if (!seen.add(share.memberId())) {
+                throw new ValidationException("Duplicate participant: " + share.memberId());
+            }
+        }
+    }
 }
