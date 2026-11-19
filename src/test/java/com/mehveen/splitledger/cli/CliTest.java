@@ -113,4 +113,13 @@ class CliTest {
         assertTrue(run("expense remove #1").contains("Removed expense #1"));
         assertTrue(cli.ledger().expenses().isEmpty());
     }
+
+    @Test
+    void balancesInPlainWords() {
+        addGroup();
+        run("expense add Dinner 900 --payer riya");
+        String out = run("balances");
+        assertTrue(out.contains("riya is owed Rs 600.00"));
+        assertTrue(out.contains("aman owes Rs 300.00"));
+    }
 }
