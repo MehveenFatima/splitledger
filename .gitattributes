@@ -1,0 +1,4 @@
+* text=auto eol=lf
+*.java text diff=java
+*.sh text eol=lf
+*.jar binary
