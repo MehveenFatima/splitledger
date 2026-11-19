@@ -148,4 +148,9 @@ public final class Money implements Comparable<Money> {
     public BigDecimal toRupees() {
         return BigDecimal.valueOf(paise, 2);
     }
+
+    @Override
+    public int compareTo(Money other) {
+        return Long.compare(paise, other.paise);
+    }
 }
